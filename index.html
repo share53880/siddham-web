@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<meta name="theme-color" content="#faf7f2">
 <title>悉昙输入法 · 安卓安装</title>
 <style>
 :root{
@@ -17,20 +16,9 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Apple Symbols","Noto Sans SC",sans-serif;
   -webkit-text-size-adjust:100%;line-height:1.7;
 }
-.wrap{max-width:720px;margin:0 auto;padding:22px 16px 70px}
+.wrap{max-width:720px;margin:0 auto;padding:28px 16px 70px}
 h1{font-size:clamp(21px,5.6vw,27px);margin:0 0 6px;letter-spacing:.2px}
-.sub{font-size:13px;color:var(--muted);margin:0 0 20px}
-
-/* 微信提示条：不靠 JS 也显示，微信里再变成固定条 */
-.wxbar{
-  background:#fdf3ec;border:1px solid #e8c9a4;border-radius:10px;
-  padding:10px 13px;font-size:12.5px;color:#7a5a35;line-height:1.6;margin:0 0 14px;
-}
-.wxbar.sticky{position:sticky;top:0;z-index:90;border-radius:0 0 10px 10px;
-  border-width:0 0 1px;margin:-22px -16px 14px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
-.wxbar b{color:#8a4a18}
-.wxbar.flash{animation:fl 1s ease 2}
-@keyframes fl{0%,100%{background:#fdf3ec}50%{background:#ffd9b3}}
+.sub{font-size:13px;color:var(--muted);margin:0 0 22px}
 
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
@@ -44,7 +32,6 @@ h1{font-size:clamp(21px,5.6vw,27px);margin:0 0 6px;letter-spacing:.2px}
 .card p{font-size:13px;color:#5c5142;margin:6px 0 0}
 .card p.muted{color:var(--muted);font-size:12px}
 
-/* 下载按钮：类名避开 btn/ad/banner 之类，国产浏览器的广告拦截会误杀 */
 a.dl{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
   text-decoration:none;margin-top:12px;padding:15px 16px;border-radius:11px;
@@ -52,25 +39,8 @@ a.dl{
   border:1px solid var(--accent);
 }
 a.dl.alt{background:#fff;color:#4d4438;border-color:var(--line);font-weight:500}
-a.dl small{font-weight:400;font-size:11.5px;opacity:.85;white-space:nowrap}
+a.dl small{font-weight:400;font-size:11.5px;opacity:.82;white-space:nowrap}
 a.dl:active{transform:translateY(1px)}
-
-/* 万一按钮被浏览器吃掉，这行纯文字链接还在 */
-.also{font-size:12.5px;color:#6b5f4d;margin:10px 0 0}
-.also a{color:#8a6f4a;text-underline-offset:2px}
-.url{
-  margin:8px 0 0;padding:9px 11px;background:#f5efe4;border:1px dashed #d9c9ae;
-  border-radius:8px;display:flex;align-items:center;gap:8px;
-}
-.url code{
-  flex:1;min-width:0;font-family:Menlo,Consolas,monospace;font-size:11.5px;
-  color:#5c5142;word-break:break-all;line-height:1.45;user-select:all;-webkit-user-select:all;
-}
-.url .mini{
-  flex:none;font:inherit;font-size:11.5px;padding:6px 10px;border-radius:7px;
-  border:1px solid #d9c9ae;background:#fff;color:#7a6242;cursor:pointer;
-}
-.url .mini:active{background:var(--soft)}
 
 .warn{
   background:#fdf3ec;border-left:3px solid #d9a05b;border-radius:8px;
@@ -91,48 +61,30 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 <body>
 <div class="wrap">
 
-  <div class="wxbar" id="wxbar">
-    <b>在微信里打开的话，安装包点不动。</b>这是微信的限制，不是页面坏了 ——
-    点右上角 <b>···</b> → <b>在浏览器打开</b>，再回来点下载。
-  </div>
-
   <h1>悉昙输入法 · 安卓版</h1>
   <p class="sub">手机上没有悉昙字体，所以这里准备了两样东西：一个能打的键盘，一个能看能导出的编辑器。</p>
 
   <div class="card">
     <h2><span class="n">1</span>先装 Keyman（键盘引擎）</h2>
     <p>国内没有 Google Play，这里直接给官方 APK（SIL 原包，未做任何修改）。</p>
-
-    <a class="dl" href="keyman-android.apk" download="keyman-android.apk">
+    <a class="dl" href="keyman-android.apk" download>
       <span>下载 Keyman 安卓版</span>
       <small>APK · 12.3 MB · v18.0.254</small>
     </a>
-
-    <p class="also">按钮没反应或被浏览器拦住，就<b>长按下面这行地址</b>复制，粘到浏览器地址栏回车：</p>
-    <div class="url">
-      <code id="apkurl">/keyman-android.apk</code>
-      <button type="button" class="mini" id="copyapk">复制</button>
-    </div>
-
-    <p class="also">也可以走 Keyman 官方直链：
-      <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk">downloads.keyman.com</a>
-    </p>
-
     <p class="muted">下载后点开安装。系统会提示「未知来源」，允许即可；装完在
       <b>设置 → 语言和输入法</b> 里启用 Keyman。</p>
+    <p class="muted">下载不动的话，用 Keyman 官方直链：
+      <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk"
+         style="color:#8a6f4a">downloads.keyman.com（同一个文件）</a></p>
   </div>
 
   <div class="card">
     <h2><span class="n">2</span>导入悉昙键盘包（可选）</h2>
     <p>想让键盘能直接打悉昙，就装这个（<code>.kmp</code>）。</p>
-    <a class="dl alt" href="siddham-iast.kmp" download="siddham-iast.kmp">
+    <a class="dl alt" href="siddham-iast.kmp" download>
       <span>下载悉昙键盘包</span>
       <small>.kmp · 121 KB</small>
     </a>
-    <div class="url">
-      <code id="kmpurl">/siddham-iast.kmp</code>
-      <button type="button" class="mini" id="copykmp">复制</button>
-    </div>
     <ul>
       <li>Keyman 菜单 → <b>Settings</b> → <b>Add Keyboard from Device</b></li>
       <li>选这个 <code>.kmp</code> → <b>Install</b></li>
@@ -152,8 +104,8 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
       <small>离线可用</small>
     </a>
     <div class="ok">
-      <b>建议：</b>用 Chrome / Edge / 小米浏览器 / Safari 打开本页；在微信里点开的话，
-      右上角「···」→ <b>在浏览器打开</b>。
+      <b>建议：</b>用 Chrome / Edge / Safari 打开本页；在微信里点开的话，
+      右上角「···」→ <b>在浏览器打开</b>，否则下载会被限制。
     </div>
   </div>
 
@@ -175,60 +127,5 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
     字体 Noto Sans Siddham（SIL OFL 1.1）· 页面完全离线，不上传任何内容
   </footer>
 </div>
-
-<script>
-(function(){
-  var wx = /MicroMessenger/i.test(navigator.userAgent);
-  var bar = document.getElementById("wxbar");
-
-  /* 绝对地址：换域名后自动跟着变，省得手改 */
-  var stem = location.protocol === "file:" ? "file://" + location.pathname
-                                            : location.origin + location.pathname;
-  var base = stem.replace(/[^\/]*$/, "");
-  document.getElementById("apkurl").textContent = base + "keyman-android.apk";
-  document.getElementById("kmpurl").textContent = base + "siddham-iast.kmp";
-
-  if (wx) { bar.className = "wxbar sticky"; }
-
-  function copyText(txt, btn){
-    var done = function(){
-      var old = btn.textContent;
-      btn.textContent = "已复制";
-      setTimeout(function(){ btn.textContent = old; }, 1600);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(txt).then(done, fb);
-    } else { fb(); }
-    function fb(){
-      var ta = document.createElement("textarea");
-      ta.value = txt;
-      ta.setAttribute("readonly", "");
-      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
-      document.body.appendChild(ta);
-      ta.select(); ta.setSelectionRange(0, txt.length);
-      try { document.execCommand("copy"); done(); } catch(e) { btn.textContent = "请长按复制"; }
-      document.body.removeChild(ta);
-    }
-  }
-
-  document.getElementById("copyapk").addEventListener("click", function(){
-    copyText(base + "keyman-android.apk", this);
-  });
-  document.getElementById("copykmp").addEventListener("click", function(){
-    copyText(base + "siddham-iast.kmp", this);
-  });
-
-  /* 微信里点 apk：拦下来，把提示条亮出来，否则用户只看到「没反应」 */
-  document.addEventListener("click", function(e){
-    var a = e.target.closest && e.target.closest('a[href$=".apk"]');
-    if (!a || !wx) return;
-    e.preventDefault();
-    bar.classList.remove("flash");
-    void bar.offsetWidth;
-    bar.classList.add("flash");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, false);
-})();
-</script>
 </body>
 </html>
