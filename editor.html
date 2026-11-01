@@ -16,7 +16,8 @@
   --line:#e6ddcf; --accent:#8a6f4a; --soft:#f1e9dc;
 }
 *{box-sizing:border-box}
-html,body{margin:0;max-width:100%;overflow-x:hidden}
+html{max-width:100%;overflow-x:hidden}   /* overflow-x 只放 html，放 body 会让 sticky 顶栏失效 */
+body{margin:0;max-width:100%;overflow-x:clip}
 body{
   background:var(--bg);color:var(--fg);
   font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Apple Symbols","Noto Sans SC",sans-serif;
@@ -42,6 +43,10 @@ body{
   .bar h1{font-size:12.5px}
   .bar .badge{display:none}
   .bar button{padding:6px 8px;font-size:11.5px}
+}
+/* 窄屏（小米常见 360dp）再省两个按钮，字号改用双指缩放 */
+@media (max-width:400px){
+  #minus,#plus{display:none}
 }
 button{
   font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;cursor:pointer;
@@ -99,6 +104,25 @@ button.ghost{background:transparent}
   list-style:none;display:block}
 .pal summary::marker{content:""}
 .pal summary::-webkit-details-marker{display:none}
+
+/* 展开后变成底部抽屉：正文留一半在屏幕上，点一下就能看到字形变化 */
+body.pal-open .wrap{padding-bottom:58vh}
+.pal[open]{
+  position:fixed;left:0;right:0;bottom:0;z-index:45;margin:0;
+  max-height:56vh;overflow-y:auto;
+  border:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;
+  background:#fff;box-shadow:0 -8px 26px rgba(0,0,0,.15);
+  padding-bottom:env(safe-area-inset-bottom);
+  animation:rise .18s ease-out;
+}
+@keyframes rise{from{transform:translateY(24px);opacity:.5}to{transform:none;opacity:1}}
+.pal[open] summary{
+  position:sticky;top:0;z-index:3;background:#fff;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:7px;font-weight:600;color:#4d4438;
+}
+.pal[open] summary::before{content:"▾";font-size:11px;color:#a2967f}
+.pal:not([open]) summary::before{content:"▴";font-size:11px;color:#b3a795;margin-right:5px}
 .pal .body{padding:4px 10px 12px;border-top:1px solid var(--line)}
 .pal h4{font-size:11.5px;color:var(--muted);margin:10px 0 6px;font-weight:600}
 .chars{display:flex;flex-wrap:wrap;gap:4px}
@@ -167,9 +191,10 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
   </p>
 
   <p class="hint">
-    还没装键盘？<a href="keyman-android.apk" download>下载 Keyman 安卓版（APK）</a>
-    · <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk" target="_blank" rel="noopener">Keyman 官方直链</a>
-    <span style="color:#b9ad99">（装不装都能用这个编辑器）</span>
+    想在<b>微信 / 备忘录</b>里直接打悉昙？<a href="keyman-android.apk" download>装 Keyman 键盘（APK）</a>
+    · <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk" target="_blank" rel="noopener">官方直链</a><br>
+    <span style="color:#b9ad99">不过安卓没有悉昙字体，装了在微信里照样显示方框——键盘只保证「发出去的字符是对的」。
+      要「看得见」，就用这个编辑器。</span>
   </p>
 
   <details class="pal">
@@ -373,33 +398,60 @@ $("#clear").onclick = function(){
   }
 };
 
-function insertText(txt){
-  paper.focus();
-  var sel = window.getSelection();
-  if (!sel.rangeCount || !paper.contains(sel.anchorNode)) {
-    var n0 = document.createTextNode(txt);
-    paper.appendChild(n0);
-    var r0 = document.createRange();
-    r0.setStartAfter(n0); r0.collapse(true);
-    sel.removeAllRanges(); sel.addRange(r0);   // 光标跟着走，下次点击才知道插在哪
-    return;
-  }
-  var r = sel.getRangeAt(0);
-  r.deleteContents();
-  var node = document.createTextNode(txt);
-  r.insertNode(node);
-  r.setStartAfter(node); r.collapse(true);
-  sel.removeAllRanges(); sel.addRange(r);
+/* 插入点用自己记的 Range，不再借 selection ——
+   paper.focus() 会把光标重置到开头，导致新字插到最前面（这个 bug 就是这么来的）。 */
+var caret = null;          // 正文里的插入点；null = 追加到末尾
+
+function setCaretAfter(node){
+  caret = document.createRange();
+  if (node && node.nodeType === 3) caret.setStart(node, node.data.length);  // 落在文本里，才能量到位置
+  else caret.setStartAfter(node);
+  caret.collapse(true);
 }
 
-function convertAndInsert(space){
-  var box = $("#iast");
+/* 用户真的在正文里点了光标，才覆盖记录 */
+document.addEventListener("selectionchange", function(){
+  var sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+  var r = sel.getRangeAt(0);
+  if (!paper.contains(r.startContainer)) return;
+  if (r.startContainer === paper && !r.startOffset && paper.textContent.length) return;  // 假光标
+  try { caret = r.cloneRange(); } catch (e) {}
+});
+
+function insertText(txt){
+  var r = (caret && paper.contains(caret.startContainer)) ? caret : null;
+  if (r) {
+    r.deleteContents();
+    var node = document.createTextNode(txt);
+    r.insertNode(node);
+    setCaretAfter(node);
+  } else {
+    var n0 = document.createTextNode(txt);
+    paper.appendChild(n0);
+    setCaretAfter(n0);
+  }
+}
+
+/* 字符表抽屉开着时，插入点若跑到看不见的地方就滚一下 */
+function ensureCaretVisible(){
+  var palEl = document.querySelector("details.pal");
+  if (!palEl || !palEl.open || !caret) return;
+  var box = caret.getBoundingClientRect();
+  var topLimit = document.querySelector(".bar").getBoundingClientRect().bottom + 10;
+  var botLimit = palEl.getBoundingClientRect().top - 10;
+  if (box.bottom > botLimit) window.scrollBy(0, Math.ceil(box.bottom - botLimit + 36));
+  else if (box.top < topLimit) window.scrollBy(0, Math.ceil(box.top - topLimit - 36));
+}
+
+function convertAndInsert(space){  var box = $("#iast");
   var raw = box.value;
   if (!raw.trim()) return;
   var out = iastToSiddham(raw);
   insertText(out + (space ? " " : ""));
   box.value = "";
   if (pvEl) pvEl.textContent = "";
+  box.focus({ preventScroll: true });   // 焦点留在输入框，键盘不收起，可以连着打下一句
 }
 $("#ins").onclick = function(){ convertAndInsert(true); };
 $("#iast").addEventListener("keydown", function(e){
@@ -627,21 +679,27 @@ function palType(cp){
     }
     var sign = cp + 0x2E;                 // 独立元音 → 附标，码位固定差 0x2E
     if (sign !== 0x115B6 && sign !== 0x115B7 && sign >= 0x115AF && sign <= 0x115BB) {
-      insertText(S(sign)); palPending = false; return;
+      insertText(S(sign)); palPending = false; ensureCaretVisible(); return;
     }
   }
   if (isConsCp(cp) && palPending) insertText(S(VIR));   // 辅音接辅音 → 连写
   insertText(S(cp));
 
   palPending = isConsCp(cp);
+  ensureCaretVisible();
 }
 
-/* 退格：删光标前一个码位（含代理对/组合标） */
+/* 退格：删插入点前一个码位（含代理对/组合标） */
 function palBack(){
-  paper.focus();
-  var sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
-  var r = sel.getRangeAt(0);
+  if (!caret || !paper.contains(caret.startContainer)) {   // 还没落过点 → 从正文末尾删
+    var last = paper.lastChild;
+    if (!last) return;
+    caret = document.createRange();
+    if (last.nodeType === 3) caret.setStart(last, last.data.length);
+    else caret.setStartAfter(last);
+    caret.collapse(true);
+  }
+  var r = caret;
   if (!r.collapsed) { r.deleteContents(); palPending = false; return; }
 
   var node = r.startContainer, off = r.startOffset;
@@ -654,14 +712,15 @@ function palBack(){
 
   var arr = Array.from(node.data.slice(0, off));
   if (!arr.length) return;
-  var last = arr[arr.length - 1];
-  node.data = node.data.slice(0, off - last.length) + node.data.slice(off);
-  var nr = document.createRange();
-  nr.setStart(node, off - last.length); nr.collapse(true);
-  sel.removeAllRanges(); sel.addRange(nr);
+  var ch = arr[arr.length - 1];
+  node.data = node.data.slice(0, off - ch.length) + node.data.slice(off);
+  var p = off - ch.length;
+  caret = document.createRange();
+  caret.setStart(node, p); caret.collapse(true);
 
-  var prev = cpBeforeCaret();
-  palPending = isConsCp(prev);
+  var before = Array.from(node.data.slice(0, p));
+  palPending = before.length ? isConsCp(before[before.length - 1].codePointAt(0)) : false;
+  ensureCaretVisible();
 }
 
 (function buildPal(){
@@ -702,6 +761,12 @@ function palBack(){
   bk.onclick = palBack;
   tools.appendChild(sp); tools.appendChild(bk);
   host.appendChild(tools);
+
+  /* 展开 → 变底部抽屉，正文自动让出上半屏 */
+  var d = document.querySelector("details.pal");
+  d.addEventListener("toggle", function(){
+    document.body.classList.toggle("pal-open", d.open);
+  });
 })();
 
 /* ?demo=1 填一段示例，便于截图/演示 */
