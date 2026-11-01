@@ -72,6 +72,9 @@ code{font-family:Menlo,"PingFang SC",monospace;background:#f0e9dd;padding:1px 5p
 footer{font-size:11.5px;color:#a89c8c;margin-top:26px;line-height:1.9;text-align:center}
 hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 a.inline{color:var(--accent)}
+.wxbar{display:none;background:#3a3128;color:#fff;font-size:12.5px;padding:11px 14px;
+  border-radius:10px;margin:0 0 14px;line-height:1.65}
+.wxbar b{color:#f6d9a8}
 </style>
 </head>
 <body>
@@ -79,6 +82,10 @@ a.inline{color:var(--accent)}
 
   <h1>悉昙字输入法</h1>
   <p class="sub">用 IAST 罗马字直接打出梵文悉昙体。选你的系统，按步骤装一次，之后随时用。</p>
+
+  <div class="wxbar" id="wxbar">
+    你现在在微信里打开这页 —— <b>文件会下载失败</b>。点右上角 <b>···</b> → <b>在浏览器打开</b>，再回来下载。
+  </div>
 
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" data-p="mac" aria-selected="false">Mac<small>macOS</small></button>
@@ -144,7 +151,7 @@ a.inline{color:var(--accent)}
       <ul>
         <li>注销一次（或重启），重新登录</li>
         <li>系统设置 → 键盘 → 文字输入 → 输入法 → <b>编辑…</b> → 点 <b>＋</b></li>
-        <li>在「印地语」分类下找 <b>悉昙 IAST</b>，添加</li>
+        <li>在「印地语（Hindi）」分类下找 <b>悉昙 IAST</b>，添加；找不到就在列表上方的搜索框打 <code>Siddham</code></li>
         <li>用 <code>Control + 空格</code> 或菜单栏图标切换</li>
       </ul>
       <div class="ok">不想要了：文件夹里的<b>「卸载.command」</b>双击一下就清干净。</div>
@@ -293,6 +300,11 @@ a.inline{color:var(--accent)}
   if (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) d = 'ios';
   else if (/Android/i.test(ua)) d = 'android';
   show(d);
+
+  // 微信内置浏览器：下载会被拦，先提示去外部浏览器
+  if (/MicroMessenger/i.test(ua)) {
+    document.getElementById('wxbar').style.display = 'block';
+  }
 })();
 </script>
 </body>
