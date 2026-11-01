@@ -174,6 +174,33 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
   border-bottom:1px solid var(--line);color:#4d4438}
 .sheet-hd b{flex:1;font-size:15px}
 #fbclose{font-size:12px;padding:6px 12px;border-radius:99px;background:#fdfbf7}
+
+/* 使用说明抽屉 */
+#guide{position:fixed;left:0;right:0;bottom:0;z-index:52;display:none;
+  max-height:84vh;max-width:640px;margin:0 auto;
+  background:#fff;border-radius:14px 14px 0 0;
+  box-shadow:0 -8px 26px rgba(0,0,0,.16);
+  padding-bottom:env(safe-area-inset-bottom);
+  animation:rise .18s ease-out}
+#guide.on{display:flex;flex-direction:column}
+#gclose{font-size:12.5px;padding:7px 14px;border-radius:99px;background:var(--accent);
+  color:#fff;border-color:var(--accent);font-weight:600}
+.g-body{overflow-y:auto;padding:4px 18px 22px;-webkit-overflow-scrolling:touch;
+  font-size:13.5px;line-height:1.75;color:#3f3730}
+.g-body h3{font-size:14px;margin:17px 0 5px;color:#4d4438;display:flex;
+  align-items:center;gap:8px;line-height:1.4}
+.g-body h3 .n{width:20px;height:20px;border-radius:50%;background:#f1e9dc;color:#7a6242;
+  font-size:11.5px;display:inline-flex;align-items:center;justify-content:center;
+  flex:none;font-weight:700}
+.g-body p{margin:5px 0 0}
+.g-body ul{margin:6px 0 0;padding-left:19px}
+.g-body li{margin:5px 0}
+.g-body code{font-family:Menlo,"PingFang SC",monospace;background:#f0e9dd;
+  padding:1px 5px;border-radius:4px;font-size:12px}
+.g-body .sd{font-family:"SiddhamEmbed";font-size:17px;line-height:1.4}
+.g-tip{background:#f7f1e6;border-radius:8px;padding:9px 11px;margin:14px 0 0;
+  font-size:12px;color:#7a6d5c;line-height:1.7}
+.g-tip b{color:#8a6f4a}
 .fb-body{overflow-y:auto;padding:12px 16px 20px;-webkit-overflow-scrolling:touch}
 .fb-form textarea{width:100%;font:inherit;font-size:14px;line-height:1.6;
   padding:10px 12px;border:1px solid var(--line);border-radius:10px;outline:none;resize:vertical;
@@ -222,7 +249,7 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 
 <div class="wrap">
   <div id="paper" contenteditable="true" spellcheck="false"
-       data-ph="在这里写字。&#10;· 装了悉昙键盘就直接打；&#10;· 没装键盘，用下面那行打罗马字，空格就变悉昙（例：oṃ maṇi padme hūṃ）。"></div>
+       data-ph="在这里写字。&#10;· 在下面那行打罗马字，按回车就变成悉昙字（例：oṃ maṇi padme hūṃ）。&#10;· 第一次用，点页脚的「使用说明」。"></div>
 
   <div class="row">
     <input id="iast" placeholder="罗马字转写：oṃ maṇi padme hūṃ" autocomplete="off" autocapitalize="off" autocorrect="off">
@@ -244,8 +271,52 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 
 <footer>
   字体：Noto Sans Siddham（SIL OFL 1.1）。写作内容只存在你自己的浏览器里，不上传。
+  <button type="button" id="gopen" class="fblink">使用说明 · 怎么打悉昙字</button>
   <button type="button" id="fbopen" class="fblink" hidden>留言 / 改进建议</button>
 </footer>
+
+<div id="guide" class="sheet">
+  <div class="sheet-hd">
+    <b>怎么用这个编辑器</b>
+    <button type="button" id="gclose">知道了</button>
+  </div>
+  <div class="g-body">
+
+    <h3><span class="n">1</span>打罗马字，直接出悉昙字</h3>
+    <p>在页面底部那行输入框里，用 <b>IAST 罗马字</b>打字，按回车（或点「转成悉昙」），
+      整句就会变成悉昙字，接到正文里。</p>
+    <p>例：<code>oṃ maṇi padme hūṃ</code> → <span class="sd">𑖌𑖽 𑖦𑖜𑖰 𑖢𑖟𑖿𑖦𑖸 𑖮𑖳𑖽</span></p>
+    <p>不需要装任何键盘、也不需要装字体——悉昙字体就打包在这个页面里，
+      字直接画在网页上。</p>
+
+    <h3><span class="n">2</span>打不出 ā ī ū ṭ ḍ ṇ ṃ ḥ 怎么办</h3>
+    <p>输入框下面有一排<b>变音字母</b>，手机自带键盘打不出这些带符号的字母，点一下就插进去。
+      末尾的 <code>Aa</code> 切换大小写。</p>
+
+    <h3><span class="n">3</span>想一个字一个字拼（字符表）</h3>
+    <p>展开底部的<b>字符表</b>，每个键都标了发音（ka / kha / ga…），按音找字，不用认字形。</p>
+    <ul>
+      <li><b>单字</b>：点辅音直接出一个完整字母</li>
+      <li><b>叠字</b>（kṣa、stra 这种）：辅音 → 点<b>「连写」</b>键 → 下一个辅音。
+        再来一次就是三叠、四叠、五叠</li>
+      <li><b>收音节</b>：点 <code>a</code> 表示这个音节到此为止，后面重新开始</li>
+      <li><b>元音</b>：点辅音之后再点元音，会自动变成附标（kā、ki、kū…）</li>
+    </ul>
+
+    <h3><span class="n">4</span>写完怎么保存</h3>
+    <ul>
+      <li><b>存图片</b>：顶栏「存图片」→ 出 PNG，手机上长按保存到相册</li>
+      <li><b>存 PDF</b>：顶栏「存 PDF」→ 走系统打印，选「存储为 PDF」</li>
+      <li>正文会自动存在你这台设备的浏览器里，换设备、清缓存就没了——<b>重要内容请存成图片</b></li>
+    </ul>
+
+    <div class="g-tip">
+      <b>微信里打开的：</b>点右上角「···」→「在浏览器打开」。
+      微信内置浏览器里存图片、存 PDF 都会受限。<br>
+      这个说明以后想再看：滚到页脚点「使用说明」。
+    </div>
+  </div>
+</div>
 
 <div id="fb" class="sheet">
   <div class="sheet-hd">
@@ -990,6 +1061,26 @@ if (location.search.indexOf("exportdemo") >= 0) {
   paper.textContent = iastToSiddham("oṃ maṇi padme hūṃ");
   setTimeout(function(){ $("#png").click(); }, 400);
 }
+
+/* ---------------- 使用说明 ---------------- */
+(function(){
+  var g = document.getElementById('guide');
+  var KEY = 'siddham-guide-seen-2';
+  if (!g) return;
+  function open(){ g.classList.add('on'); }
+  function close(){
+    g.classList.remove('on');
+    try { localStorage.setItem(KEY, '1'); } catch(e){}
+  }
+  var go = document.getElementById('gopen');
+  var gc = document.getElementById('gclose');
+  if (go) go.addEventListener('click', open);
+  if (gc) gc.addEventListener('click', close);
+  // 点空白处（抽屉外）也关掉
+  g.addEventListener('click', function(e){ if (e.target === g) close(); });
+  // 第一次打开自动弹一次；之后从页脚入口看
+  try { if (!localStorage.getItem(KEY)) open(); } catch(e){}
+})();
 
 /* ---------------- 自检（?selftest=1） ---------------- */
 if (location.search.indexOf("selftest") >= 0) {
