@@ -25,12 +25,17 @@ h1{font-size:clamp(21px,5.6vw,27px);margin:0 0 6px;letter-spacing:.2px}
   background:var(--bg);padding:8px 0 10px}
 .tab{
   flex:1;appearance:none;border:1px solid var(--line);background:var(--card);
-  color:#5c5142;font-size:13.5px;font-weight:600;padding:11px 6px;border-radius:10px;
+  color:#5c5142;font-size:13px;font-weight:600;padding:10px 5px;border-radius:10px;
   cursor:pointer;font-family:inherit;line-height:1.3;
 }
-.tab small{display:block;font-weight:400;font-size:10.5px;opacity:.65;margin-top:2px}
+.tab small{display:block;font-weight:400;font-size:10px;opacity:.65;margin-top:2px}
 .tab[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
 .tab[aria-selected="true"] small{opacity:.8}
+@media (max-width:430px){
+  .tabs{gap:5px}
+  .tab{font-size:12px;padding:9px 3px}
+  .tab small{font-size:9px}
+}
 
 .panel{display:none}
 .panel.on{display:block}
@@ -81,7 +86,7 @@ a.inline{color:var(--accent)}
 <div class="wrap">
 
   <h1>悉昙字输入法</h1>
-  <p class="sub">用 IAST 罗马字直接打出梵文悉昙体。选你的系统，按步骤装一次，之后随时用。</p>
+  <p class="sub">用 IAST 罗马字打出梵文悉昙体。Mac、iPhone / iPad、安卓、Windows —— 选你的系统，按步骤装一次。</p>
 
   <div class="wxbar" id="wxbar">
     你现在在微信里打开这页 —— <b>文件会下载失败</b>。点右上角 <b>···</b> → <b>在浏览器打开</b>，再回来下载。
@@ -91,6 +96,7 @@ a.inline{color:var(--accent)}
     <button class="tab" role="tab" data-p="mac" aria-selected="false">Mac<small>macOS</small></button>
     <button class="tab" role="tab" data-p="ios" aria-selected="false">iPhone<small>iPad 同</small></button>
     <button class="tab" role="tab" data-p="android" aria-selected="false">安卓<small>Android</small></button>
+    <button class="tab" role="tab" data-p="win" aria-selected="false">Windows<small>用官方</small></button>
   </div>
 
   <!-- ===================== Mac ===================== -->
@@ -157,9 +163,13 @@ a.inline{color:var(--accent)}
       <div class="ok">不想要了：文件夹里的<b>「卸载.command」</b>双击一下就清干净。</div>
     </div>
 
-    <p class="muted" style="font-size:12px;margin-top:16px">
-      完整键位与用法：<a class="inline" href="install-mac.html">Mac 操作说明 →</a>
-    </p>
+    <div class="card">
+      <h2>完整操作说明</h2>
+      <p>每个键打什么字、屏幕键盘怎么看、Shift / Option 怎么切层、装不上怎么排查——都在这一页。</p>
+      <a class="dl alt" href="install-mac.html">
+        <span>Mac 操作说明</span><small>键位 · 用法 · 排错</small>
+      </a>
+    </div>
   </section>
 
   <!-- ===================== iOS ===================== -->
@@ -218,52 +228,38 @@ a.inline{color:var(--accent)}
     <div class="card">
       <h2><span class="n">6</span>开始打字</h2>
       <p>输入时点地球键切到 <b>Siddham IAST</b>。长按字母键出送气音（<code>k</code> 长按出 <b>kh</b>）。</p>
-      <p class="muted">打不出 <code>ā ī ṭ ṃ ḥ</code>？用附标层，或者直接用下面的网页编辑器。</p>
+      <p class="muted">打不出 <code>ā ī ṭ ṃ ḥ</code>？长按对应字母挑，或者切到附标层。</p>
     </div>
 
-    <p class="muted" style="font-size:12px;margin-top:16px">
-      完整说明与排错表：<a class="inline" href="install-ios.html">iPhone 安装说明 →</a>　
-      键位怎么用：<a class="inline" href="manual-mobile.html">手机操作说明 →</a>
-    </p>
+    <div class="card">
+      <h2>完整说明</h2>
+      <p>逐步图文、装不上的各种情况、送气音（kh gh th dh…）怎么打——两张表都在这里。</p>
+      <a class="dl alt" href="install-ios.html">
+        <span>iPhone 安装说明</span><small>图文 · 排错表</small>
+      </a>
+      <a class="dl alt" href="manual-mobile.html">
+        <span>手机键位操作说明</span><small>每个键打什么</small>
+      </a>
+    </div>
   </section>
 
   <!-- ===================== Android ===================== -->
   <section class="panel" id="p-android" role="tabpanel">
 
     <div class="ok">
-      <b>先说句实话：</b>安卓系统里没有悉昙字体，装了键盘，在微信里<b>照样显示方框</b>。
-      键盘只保证「发出去的字符是对的」，不能让你看见。<br>
-      想<b>看见</b>字，用下面那个<b>自带字体的网页编辑器</b>，不用装任何东西。
+      <b>安卓系统自带的字体里没有悉昙字</b>——装了第三方键盘，打出来的字在微信、备忘录里照样是方框。
+      所以这个平台不给键盘，给一个<b>自带字体</b>的网页编辑器：打开就能写，写完存成图片发出去，谁都能看。
     </div>
 
     <div class="card">
-      <h2><span class="n">1</span>打开网页编辑器（多数人只需要这个）</h2>
-      <p>字体嵌在页面里，打开就能写，写完存成图片发出去，谁都能看。可以打罗马字转写，也可以点字符表一个个拼。</p>
+      <h2><span class="n">1</span>打开网页编辑器</h2>
+      <p>字体嵌在页面里，不用装任何东西，不联网也能用。可以打罗马字转写，也可以点字符表一个字一个字拼。</p>
       <a class="dl" href="editor.html?v=20261101">
         <span>打开悉昙编辑器</span><small>不装东西 · 离线可用</small>
       </a>
-    </div>
-
-    <hr>
-
-    <div class="card">
-      <h2><span class="n">2</span>想在微信里直接打字？（可选）</h2>
-      <p class="muted">第一步 · 装键盘引擎（SIL 官方原包，未修改）：</p>
-      <a class="dl alt" href="keyman-android.apk" download>
-        <span>下载 Keyman 安卓版</span><small>APK · 12.3 MB</small>
-      </a>
-      <p class="muted">下不动的话用官方直链：
-        <a class="inline" href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk">downloads.keyman.com</a></p>
-
-      <p class="muted" style="margin-top:14px">第二步 · 导入悉昙键盘包（<code>.kmp</code>）：</p>
-      <a class="dl alt" href="siddham-iast.kmp" download>
-        <span>下载悉昙键盘包</span><small>.kmp · 121 KB</small>
-      </a>
-      <ul>
-        <li>Keyman 菜单 → <b>Settings</b> → <b>Add Keyboard from Device</b></li>
-        <li>选这个 <code>.kmp</code> → <b>Install</b></li>
-        <li>装完在 <b>设置 → 语言和输入法</b> 里启用 Keyman</li>
-      </ul>
+      <div class="warn" style="margin-top:12px">
+        <b>在微信里点开的：</b>右上角 <b>···</b> → <b>在浏览器打开</b>。微信内置浏览器里保存图片、导出 PDF 都会受限。
+      </div>
     </div>
 
     <div class="card">
@@ -277,9 +273,67 @@ a.inline{color:var(--accent)}
     </div>
   </section>
 
+  <!-- ===================== Windows ===================== -->
+  <section class="panel" id="p-win" role="tabpanel">
+
+    <div class="ok">
+      <b>Windows 上不用装我这个</b>——中华书局有一套官方的、更权威的。
+      编《中华大藏经续编》的时候，中华书局（古联公司）请崔文治先生摹写了
+      <b>「中华梵文悉昙体字库」</b>，配了输入法，<b>免费向社会开放使用</b>，收字 7557 个。
+      用这一套就行。
+    </div>
+
+    <div class="card">
+      <h2><span class="n">1</span>去中华书局「籍合网」下载</h2>
+      <p>页面打开后，把<b>顶部标签切到「中华梵文悉昙体」</b>——默认显示的是汉字输入法，直接下载会下错。</p>
+      <a class="dl" href="https://www.ancientbooks.cn/helpcore?input" target="_blank" rel="noopener">
+        <span>梵文悉昙体输入法</span><small>ancientbooks.cn</small>
+      </a>
+      <a class="dl alt" href="https://www.ancientbooks.cn/helpcore?font" target="_blank" rel="noopener">
+        <span>梵文悉昙体字库</span><small>ancientbooks.cn</small>
+      </a>
+      <p class="muted">下载链接在<b>页面最底部</b>，点「下载」会先把文件存到本地。</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">2</span>三步装好</h2>
+      <ul>
+        <li><b>先装字库</b>：下回来的压缩包解开，是几个 <code>.ttf</code>；双击或拷进 <code>C:\Windows\Fonts</code></li>
+        <li><b>再装输入法</b>：下回来的文件夹里有个 <code>exe</code>，双击装</li>
+        <li>装完在桌面语言栏里选<b>「部件输入法」</b>。没出现就在「控制面板 → 语言 → 高级设置」里
+            勾上「使用桌面语言栏（可用时）」</li>
+      </ul>
+      <div class="warn">
+        <b>顺序不能反。</b>只装输入法不装字库，打出来的字全是方框——不是输入法坏了，是没字体。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">3</span>怎么打</h2>
+      <ul>
+        <li>按<b>拉丁转写</b>打字：打 <code>a</code>，候选里出对应的悉昙字母，挑一个</li>
+        <li>Shift 或 <code>Ctrl + 空格</code> 在梵文 / 拉丁文之间切换</li>
+        <li>翻页用 <code>← →</code> 或 <code>PgUp / PgDn</code>；特殊符号按 <code>[</code> 调出</li>
+      </ul>
+      <p class="muted">它和本页 Mac / iPhone 那套 IAST 键位不是同一套逻辑：那边是「一键出一个字」，
+        这边是「打字母出候选」。两个都能用，选一个顺手的。</p>
+    </div>
+
+    <div class="card">
+      <h2>注意</h2>
+      <ul>
+        <li><b>只支持 Windows</b>，Mac 上装不了 —— Mac 用第一个标签那两种装法</li>
+        <li>下载需要<b>登录籍合网账号</b>（注册免费），直接点下载会先跳登录页</li>
+        <li>字库和输入法都是中华书局古联公司的版权，<b>免费开放使用、可自由下载</b>，
+            但请遵守对方的授权说明，不要拿去二次分发或商用</li>
+      </ul>
+    </div>
+  </section>
+
   <footer>
-    基于 Keyman（SIL 开源，MIT）· 字体 Noto Sans Siddham（SIL OFL 1.1）<br>
-    所有安装包可直接转发，无账号、无追踪 · 网页编辑器完全离线，不上传任何内容
+    基于 Keyman（SIL · MIT）· 字体 Noto Sans Siddham（SIL OFL 1.1）<br>
+    Windows 版为中华书局古联公司「中华梵文悉昙体字库及输入法」<br>
+    安装包可直接转发 · 网页编辑器完全离线，不上传任何内容
   </footer>
 </div>
 
@@ -288,17 +342,19 @@ a.inline{color:var(--accent)}
   var tabs = [].slice.call(document.querySelectorAll('.tab'));
   var panels = {mac:document.getElementById('p-mac'),
                 ios:document.getElementById('p-ios'),
-                android:document.getElementById('p-android')};
+                android:document.getElementById('p-android'),
+                win:document.getElementById('p-win')};
   function show(p){
     tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.p === p)); });
     Object.keys(panels).forEach(function(k){ panels[k].classList.toggle('on', k === p); });
   }
   tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.p); }); });
 
-  // 按设备自动选：iPhone/iPad → iOS，安卓 → 安卓，Mac → Mac
+  // 按设备自动选：iPhone/iPad → iOS，安卓 → 安卓，Windows → Windows，其余 Mac
   var ua = navigator.userAgent, d = 'mac';
   if (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) d = 'ios';
   else if (/Android/i.test(ua)) d = 'android';
+  else if (/Windows/i.test(ua)) d = 'win';
   show(d);
 
   // 微信内置浏览器：下载会被拦，先提示去外部浏览器
