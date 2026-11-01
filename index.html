@@ -53,6 +53,29 @@ h1{font-size:clamp(21px,5.6vw,27px);margin:0 0 6px;letter-spacing:.2px}
 .card p.muted{color:var(--muted);font-size:12px}
 h3.sec{font-size:13px;color:var(--muted);font-weight:600;margin:22px 0 8px;letter-spacing:.4px}
 
+/* 备选方案折叠：默认收起，不占版面 */
+details.fold{margin:8px 0 0}
+details.fold>summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+  padding:13px 15px;border:1px dashed #d8c9b0;border-radius:12px;
+  background:#fbf6ec;font-size:13.5px;font-weight:600;color:#6b5b45;line-height:1.45;
+}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::marker{content:""}
+details.fold>summary .arw{font-size:10px;color:#a89c8c;transition:transform .18s;flex:none}
+details.fold[open]>summary .arw{transform:rotate(90deg)}
+details.fold[open]>summary{border-style:solid;border-color:#e3d4bb}
+details.fold>summary .tip{margin-left:auto;font-size:11px;font-weight:400;color:#a89c8c;white-space:nowrap}
+details.fold .fold-body{padding-top:2px}
+
+/* 装好之后的操作说明：换底色强调，和下载步骤区分开 */
+.card.emph{background:#eef4f1;border-color:#cfe0d7;border-left:4px solid #6f9481}
+.card.emph h2{color:#3d6152}
+.card.emph h2 .n{background:#d9e8e1;color:#3d6152}
+.card.emph p{color:#4a5f55}
+.card.emph p.muted{color:#7b9186}
+.card.emph a.dl.alt{background:#fff;border-color:#cfe0d7;color:#3d6152}
+
 a.dl{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
   text-decoration:none;margin-top:12px;padding:15px 16px;border-radius:11px;
@@ -132,38 +155,46 @@ a.inline{color:var(--accent)}
       <p class="muted">包里已经带了 Noto Sans Siddham 字体，不用另外装。</p>
     </div>
 
-    <h3 class="sec">方式 B · 系统原生布局（不装软件）</h3>
+    <details class="fold">
+      <summary>
+        <span class="arw">▶</span>方式 B · 系统原生布局（不装任何软件）
+        <span class="tip">点开查看</span>
+      </summary>
+      <div class="fold-body">
 
-    <div class="card">
-      <h2><span class="n">1</span>下载并解压</h2>
-      <a class="dl alt" href="siddham-mac-native.zip" download>
-        <span>下载原生键盘布局</span><small>.zip · 116 KB</small>
-      </a>
-      <p class="muted">解压得到一个文件夹，里面有安装脚本和字体。<b>请不要在压缩包里直接双击</b>。</p>
-    </div>
+        <div class="card">
+          <h2><span class="n">1</span>下载并解压</h2>
+          <a class="dl alt" href="siddham-mac-native.zip" download>
+            <span>下载原生键盘布局</span><small>.zip · 116 KB</small>
+          </a>
+          <p class="muted">解压得到一个文件夹，里面有安装脚本和字体。<b>请不要在压缩包里直接双击</b>。</p>
+        </div>
 
-    <div class="card">
-      <h2><span class="n">2</span>双击「安装.command」</h2>
-      <ul>
-        <li>脚本只往你自己家目录写两个位置：<code>~/Library/Keyboard Layouts/</code> 和 <code>~/Library/Fonts/</code></li>
-        <li>不需要管理员密码，不碰系统目录</li>
-        <li>如果提示「无法打开，来自身份不明的开发者」：在文件上<b>右键 → 打开</b>，再点一次「打开」</li>
-      </ul>
-    </div>
+        <div class="card">
+          <h2><span class="n">2</span>双击「安装.command」</h2>
+          <ul>
+            <li>脚本只往你自己家目录写两个位置：<code>~/Library/Keyboard Layouts/</code> 和 <code>~/Library/Fonts/</code></li>
+            <li>不需要管理员密码，不碰系统目录</li>
+            <li>如果提示「无法打开，来自身份不明的开发者」：在文件上<b>右键 → 打开</b>，再点一次「打开」</li>
+          </ul>
+        </div>
 
-    <div class="card">
-      <h2><span class="n">3</span>注销重登，再添加键盘</h2>
-      <p>键盘布局<b>只在登录时被系统扫描</b>，不注销就不会出现。</p>
-      <ul>
-        <li>注销一次（或重启），重新登录</li>
-        <li>系统设置 → 键盘 → 文字输入 → 输入法 → <b>编辑…</b> → 点 <b>＋</b></li>
-        <li>在「印地语（Hindi）」分类下找 <b>悉昙 IAST</b>，添加；找不到就在列表上方的搜索框打 <code>Siddham</code></li>
-        <li>用 <code>Control + 空格</code> 或菜单栏图标切换</li>
-      </ul>
-      <div class="ok">不想要了：文件夹里的<b>「卸载.command」</b>双击一下就清干净。</div>
-    </div>
+        <div class="card">
+          <h2><span class="n">3</span>注销重登，再添加键盘</h2>
+          <p>键盘布局<b>只在登录时被系统扫描</b>，不注销就不会出现。</p>
+          <ul>
+            <li>注销一次（或重启），重新登录</li>
+            <li>系统设置 → 键盘 → 文字输入 → 输入法 → <b>编辑…</b> → 点 <b>＋</b></li>
+            <li>在「印地语（Hindi）」分类下找 <b>悉昙 IAST</b>，添加；找不到就在列表上方的搜索框打 <code>Siddham</code></li>
+            <li>用 <code>Control + 空格</code> 或菜单栏图标切换</li>
+          </ul>
+          <div class="ok">不想要了：文件夹里的<b>「卸载.command」</b>双击一下就清干净。</div>
+        </div>
 
-    <div class="card">
+      </div>
+    </details>
+
+    <div class="card emph">
       <h2>完整操作说明</h2>
       <p>每个键打什么字、屏幕键盘怎么看、Shift / Option 怎么切层、装不上怎么排查——都在这一页。</p>
       <a class="dl alt" href="install-mac.html">
@@ -231,7 +262,7 @@ a.inline{color:var(--accent)}
       <p class="muted">打不出 <code>ā ī ṭ ṃ ḥ</code>？长按对应字母挑，或者切到附标层。</p>
     </div>
 
-    <div class="card">
+    <div class="card emph">
       <h2>装好之后，键位怎么用</h2>
       <p>每个键打什么字、送气音（kh gh th dh…）怎么打、附标层和符号层怎么切——都在这一页。</p>
       <a class="dl alt" href="manual-mobile.html">
