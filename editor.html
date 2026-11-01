@@ -159,22 +159,13 @@ body.pal-open .wrap{padding-bottom:58vh}
 
 footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:var(--muted);line-height:1.9}
 
-/* 留言入口与留言面板（只在有后端时出现） */
+/* 页脚入口按钮 */
 .fblink{display:block;margin:12px auto 4px;font:inherit;font-size:12px;color:#8a6f4a;
   background:transparent;border:1px solid #ddcbb0;border-radius:99px;padding:8px 16px}
 .fblink:active{background:#f7f1e6}
-.fblink[hidden]{display:none}   /* 纯静态托管没有后端时，这个入口必须真的不出现 */
-#fb{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;
-  max-height:76vh;max-width:640px;margin:0 auto;
-  background:#fff;border-radius:14px 14px 0 0;
-  box-shadow:0 -8px 26px rgba(0,0,0,.16);
-  padding-bottom:env(safe-area-inset-bottom);
-  animation:rise .18s ease-out}
-#fb.on{display:flex;flex-direction:column}
 .sheet-hd{display:flex;align-items:center;gap:10px;padding:14px 16px;
   border-bottom:1px solid var(--line);color:#4d4438}
 .sheet-hd b{flex:1;font-size:15px}
-#fbclose{font-size:12px;padding:6px 12px;border-radius:99px;background:#fdfbf7}
 
 /* 使用说明抽屉 */
 #guide{position:fixed;left:0;right:0;bottom:0;z-index:52;display:none;
@@ -202,28 +193,6 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 .g-tip{background:#f7f1e6;border-radius:8px;padding:9px 11px;margin:14px 0 0;
   font-size:12px;color:#7a6d5c;line-height:1.7}
 .g-tip b{color:#8a6f4a}
-.fb-body{overflow-y:auto;padding:12px 16px 20px;-webkit-overflow-scrolling:touch}
-.fb-form textarea{width:100%;font:inherit;font-size:14px;line-height:1.6;
-  padding:10px 12px;border:1px solid var(--line);border-radius:10px;outline:none;resize:vertical;
-  background:#fdfbf7}
-.fb-form textarea:focus{border-color:#c9b591}
-.fb-row{display:flex;gap:8px;margin-top:9px}
-.fb-row input{flex:1;min-width:0;font:inherit;font-size:13px;padding:9px 11px;
-  border:1px solid var(--line);border-radius:9px;outline:none;background:#fff}
-.fb-row button{padding:9px 18px;border-radius:9px;background:var(--accent);
-  color:#fff;border-color:var(--accent);font-weight:600}
-.fb-row button:disabled{opacity:.5}
-.fb-note{font-size:11.5px;color:#a2967f;line-height:1.65;margin:9px 2px 0}
-#fbadmin{font-size:12px;padding:6px 12px;border-radius:99px;background:#fdfbf7}
-#fbadmin.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.fb-item{padding:12px 0;border-bottom:1px solid #f1e9dc;position:relative}
-.fb-del{position:absolute;right:0;top:12px;font-size:11.5px;padding:4px 10px;
-  border-radius:99px;color:#a94d34;border-color:#e8cdc4;background:#fff}
-.fb-meta{padding-right:60px}
-.fb-item:last-child{border-bottom:0}
-.fb-meta{font-size:11.5px;color:#a2967f;margin-bottom:4px}
-.fb-text{font-size:13.5px;color:#3f3730;line-height:1.68;white-space:pre-wrap;word-break:break-word}
-.fb-empty{font-size:12.5px;color:#a2967f;padding:20px 0;text-align:center}
 
 @media print{
   .bar,.pal,.row,.acc,#pv,.hint,footer,#shot{display:none !important}
@@ -273,7 +242,6 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 <footer>
   字体：Noto Sans Siddham（SIL OFL 1.1）。写作内容只存在你自己的浏览器里，不上传。
   <button type="button" id="gopen" class="fblink">使用说明 · 怎么打悉昙字</button>
-  <button type="button" id="fbopen" class="fblink" hidden>留言 / 改进建议</button>
 </footer>
 
 <div id="guide" class="sheet">
@@ -316,25 +284,6 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
       微信内置浏览器里存图片、存 PDF 都会受限。<br>
       这个说明以后想再看：滚到页脚点「使用说明」。
     </div>
-  </div>
-</div>
-
-<div id="fb" class="sheet">
-  <div class="sheet-hd">
-    <b>留言 / 改进建议</b>
-    <button type="button" id="fbadmin">管理</button>
-    <button type="button" id="fbclose">收起</button>
-  </div>
-  <div class="fb-body">
-    <div class="fb-form">
-      <textarea id="fbtext" maxlength="400" rows="3" placeholder="哪里不好用？想要什么功能？想加哪些字？"></textarea>
-      <div class="fb-row">
-        <input id="fbname" maxlength="20" placeholder="署名（可留空）">
-        <button type="button" id="fbsend">提交</button>
-      </div>
-      <p class="fb-note">留言是公开的，所有人都能看到。请勿发布广告、联系方式或私人信息，违规内容会被删除。</p>
-    </div>
-    <div id="fblist"><div class="fb-empty">加载中…</div></div>
   </div>
 </div>
 
@@ -915,138 +864,6 @@ function palBack(){
   var d = document.querySelector("details.pal");
   d.addEventListener("toggle", function(){
     document.body.classList.toggle("pal-open", d.open);
-  });
-})();
-
-/* ---------------- 留言板 ----------------
-   需要后端（server.js 的 /api/feedback）。纯静态托管时接口 404，入口自动隐藏。 */
-(function(){
-  var API = location.pathname.replace(/[^\/]*$/, "") + "api/feedback";
-  var btn = $("#fbopen"), sheet = $("#fb"), list = $("#fblist"),
-      txt = $("#fbtext"), nameEl = $("#fbname"), send = $("#fbsend");
-
-  var token = "";
-  try { token = localStorage.getItem("siddham-fb-token") || ""; } catch (e) {}
-  function markAdmin(){
-    var a = $("#fbadmin");
-    if (!a) return;
-    a.classList.toggle("on", !!token);
-    a.textContent = token ? "管理中" : "管理";
-  }
-
-  function fmt(ts){
-    var d = new Date(ts);
-    if (isNaN(d.getTime())) return "";
-    var p2 = function(n){ return (n < 10 ? "0" : "") + n; };
-    return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()) + " " +
-           p2(d.getHours()) + ":" + p2(d.getMinutes());
-  }
-  function empty(msg){
-    var e = document.createElement("div");
-    e.className = "fb-empty"; e.textContent = msg;
-    return e;
-  }
-  function render(items, total){
-    list.innerHTML = "";
-    if (!items.length) { list.appendChild(empty("还没有人留言，你是第一个。")); return; }
-    items.forEach(function(it){
-      var d = document.createElement("div"); d.className = "fb-item";
-      var m = document.createElement("div"); m.className = "fb-meta";
-      m.textContent = (it.name || "匿名") + " · " + fmt(it.ts);
-      var t = document.createElement("div"); t.className = "fb-text";
-      t.textContent = it.text;
-      d.appendChild(m); d.appendChild(t);
-      if (token) {
-        var del = document.createElement("button");
-        del.type = "button"; del.className = "fb-del"; del.textContent = "删除";
-        del.addEventListener("click", function(){
-          if (!confirm("删掉这条留言？\n\n" + (it.text || "").slice(0, 60))) return;
-          fetch(API + "/del", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ id: it.id, token: token })
-          }).then(function(r){
-            return r.json().then(function(j){ return { ok: r.ok, j: j }; });
-          }).then(function(res){
-            if (!res.ok) throw new Error(res.j.error || "删除失败");
-            toast("已删除"); load();
-          }).catch(function(e){ toast(e.message || "删除失败"); });
-        });
-        d.appendChild(del);
-      }
-      list.appendChild(d);
-    });
-    if (total > items.length) {
-      list.appendChild(empty("只显示最近 " + items.length + " 条（共 " + total + " 条）"));
-    }
-  }
-
-  function load(){
-    fetch(API, { cache: "no-store" }).then(function(r){
-      if (!r.ok) throw new Error("bad");
-      return r.json();
-    }).then(function(d){
-      render(d.items || [], d.total || 0);
-    }).catch(function(){
-      list.innerHTML = "";
-      list.appendChild(empty("留言板连不上，可能是网络问题，稍后再试。"));
-    });
-  }
-
-  // 后端在才露出入口；纯静态站点这里会 404，按钮保持隐藏
-  fetch(API, { cache: "no-store" }).then(function(r){
-    if (!r.ok) throw new Error("bad");
-    return r.json();
-  }).then(function(){ btn.hidden = false; }).catch(function(){});
-
-  btn.addEventListener("click", function(){
-    var pal = document.querySelector("details.pal");
-    if (pal && pal.open) pal.open = false;
-    sheet.classList.add("on");
-    load();
-  });
-  $("#fbclose").addEventListener("click", function(){ sheet.classList.remove("on"); });
-
-  function saveToken(v){
-    try {
-      if (v) localStorage.setItem("siddham-fb-token", v);
-      else localStorage.removeItem("siddham-fb-token");
-    } catch (e) {}
-  }
-  $("#fbadmin").addEventListener("click", function(){
-    var v = window.prompt("输入管理口令（服务器首次启动时会打印，也存在 data/admin-token.txt）\n留空则退出管理模式", token || "");
-    if (v === null) return;
-    v = v.trim();
-    if (!v) { token = ""; saveToken(""); markAdmin(); load(); return; }   // 退出管理
-    fetch(API + "/auth", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ token: v })
-    }).then(function(r){
-      return r.json().then(function(j){ return { ok: r.ok, j: j }; });
-    }).then(function(res){
-      if (!res.ok) { toast(res.j.error || "口令不对"); return; }
-      token = v; saveToken(v); markAdmin(); toast("已进入管理模式"); load();
-    }).catch(function(){ toast("验证失败，稍后再试"); });
-  });
-  markAdmin();
-
-  send.addEventListener("click", function(){
-    var v = txt.value.trim();
-    if (v.length < 2) { toast("写两句再提交"); return; }
-    send.disabled = true;
-    fetch(API, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ text: v, name: nameEl.value.trim() })
-    }).then(function(r){
-      return r.json().then(function(j){ return { ok: r.ok, j: j }; });
-    }).then(function(res){
-      if (!res.ok) throw new Error(res.j.error || "提交失败");
-      txt.value = ""; toast("收到，谢谢！"); load();
-    }).catch(function(e){
-      toast(e.message || "提交失败，稍后再试");
-    }).then(function(){ send.disabled = false; });
   });
 })();
 
