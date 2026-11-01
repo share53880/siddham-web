@@ -397,7 +397,7 @@ $("#plus").onclick = function(){ setSize(size + 4); };
 $("#minus").onclick = function(){ setSize(size - 4); };
 $("#clear").onclick = function(){
   if (!paper.innerText.trim() || confirm("清空当前内容？")) {
-    paper.innerHTML = ""; paper.focus(); palPending = false;
+    paper.innerHTML = ""; paper.focus();
   }
 };
 
@@ -663,35 +663,39 @@ function cpBeforeCaret(){
   var arr = Array.from(node.data.slice(0, off));
   return arr.length ? arr[arr.length - 1].codePointAt(0) : 0;
 }
-/* 字符表按输入法规则工作（状态机，不靠猜前一个码位）：
-   · 点辅音 → 插入；若上一个动作也是辅音，先补「连写」，于是 ka→ṣa 直接成 kṣa，
-     连续点就是三叠、四叠、五叠。
-   · 点「a」→ 内禀元音，不写字，只把音节收住（buddha 后面接 ka 就靠这一下）。
-   · 点其他元音 → 若前面是辅音，自动换成附标（ka + ā → kā）。
-   · 点元音附标 / ṃ / ḥ / 标点 → 同样收住音节。 */
-var palPending = false;   // 上一个动作是辅音，下一个辅音要连写
-var palAHinted = false;   // 「点 a 收音节」只提示一次，别每次点都弹
+/* 字符表按输入法规则工作：
+   · 默认「各点是各点」——不自动连写。要连写就点「连写」键，再点下一个辅音。
+     这样单独写一个辅音（比如种子字）不会被自动粘上消元音号。
+   · 辅音后点独立元音 → 自动换成附标（ka + ā → kā）。
+   · 辅音后点 a → 内禀元音，不写字，只提示一下。 */
+var palAHinted = false;
 
 function isConsCp(cp){ return cp >= 0x1158E && cp <= 0x115AE; }
 
+/* 插入点前面的那个码位（不依赖 selection） */
+function cpBeforeInsert(){
+  if (!caret || !paper.contains(caret.startContainer)) return 0;
+  var n = caret.startContainer, off = caret.startOffset;
+  if (n.nodeType !== 3 || !off) return 0;
+  var arr = Array.from(n.data.slice(0, off));
+  return arr.length ? arr[arr.length - 1].codePointAt(0) : 0;
+}
+
 function palType(cp){
   var isVowel = (cp >= 0x11580 && cp <= 0x1158D);
+  var prevCons = isConsCp(cpBeforeInsert());
 
-  if (isVowel && palPending) {
-    if (cp === 0x11580) {                 // a：内禀元音，只收音节
-      palPending = false;
-      if (!palAHinted) { palAHinted = true; toast("a 不用写符号，点它＝这个音节结束"); }
+  if (isVowel && prevCons) {
+    if (cp === 0x11580) {                 // a：内禀元音，不写字
+      if (!palAHinted) { palAHinted = true; toast("a 是默认元音，不用写符号"); }
       return;
     }
     var sign = cp + 0x2E;                 // 独立元音 → 附标，码位固定差 0x2E
     if (sign !== 0x115B6 && sign !== 0x115B7 && sign >= 0x115AF && sign <= 0x115BB) {
-      insertText(S(sign)); palPending = false; ensureCaretVisible(); return;
+      insertText(S(sign)); ensureCaretVisible(); return;
     }
   }
-  if (isConsCp(cp) && palPending) insertText(S(VIR));   // 辅音接辅音 → 连写
   insertText(S(cp));
-
-  palPending = isConsCp(cp);
   ensureCaretVisible();
 }
 
@@ -706,7 +710,7 @@ function palBack(){
     caret.collapse(true);
   }
   var r = caret;
-  if (!r.collapsed) { r.deleteContents(); palPending = false; return; }
+  if (!r.collapsed) { r.deleteContents(); return; }
 
   var node = r.startContainer, off = r.startOffset;
   if (node.nodeType === 1) {
@@ -714,7 +718,7 @@ function palBack(){
     node = node.childNodes[off - 1];
     off = (node && node.nodeType === 3) ? node.data.length : 0;
   }
-  if (!node || node.nodeType !== 3 || !off) { palPending = false; return; }
+  if (!node || node.nodeType !== 3 || !off) return;
 
   var arr = Array.from(node.data.slice(0, off));
   if (!arr.length) return;
@@ -724,8 +728,6 @@ function palBack(){
   caret = document.createRange();
   caret.setStart(node, p); caret.collapse(true);
 
-  var before = Array.from(node.data.slice(0, p));
-  palPending = before.length ? isConsCp(before[before.length - 1].codePointAt(0)) : false;
   ensureCaretVisible();
 }
 
@@ -733,8 +735,8 @@ function palBack(){
   var host = $("#pal");
   var tip = document.createElement("div");
   tip.className = "pal-tip";
-  tip.innerHTML = "<b>叠字</b>：辅音 → <b>连写</b> → 下一个辅音，重复就是三叠、四叠、五叠（辅音直接连点也会自动连写）。" +
-                  "要断开或收住音节就点一下 <b>a</b>——a 是默认元音，不写字。";
+  tip.innerHTML = "<b>连写默认关着</b>——单点辅音就是独立的字。要叠字就：<b>辅音 → 连写 → 下一个辅音</b>，" +
+                  "重复几次就是三叠、四叠、五叠。";
   host.appendChild(tip);
   PAL.forEach(function(grp){
     var h = document.createElement("h4");
@@ -772,7 +774,7 @@ function palBack(){
   tools.className = "pal-tools";
   var sp = document.createElement("button");
   sp.type = "button"; sp.textContent = "空格";
-  sp.onclick = function(){ insertText(" "); palPending = false; };
+  sp.onclick = function(){ insertText(" "); };
   var bk = document.createElement("button");
   bk.type = "button"; bk.textContent = "⌫ 退格";
   bk.onclick = palBack;
