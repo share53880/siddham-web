@@ -99,30 +99,35 @@ button.ghost{background:transparent}
 .hint a{color:#8a6f4a;text-decoration:none;border-bottom:1px solid #d8c8ae}
 .hint code{font-family:Menlo,"PingFang SC",monospace;background:#f0e9dd;padding:1px 4px;border-radius:4px}
 
-.pal{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
-.pal summary{padding:10px 13px;font-size:13px;line-height:1.65;cursor:pointer;color:#5c5142;
-  list-style:none;display:block}
+/* 字符表入口：未展开时就是一条醒目的黄底按钮 */
+.pal{margin-top:16px;border:0;background:transparent;overflow:visible}
+.pal summary{
+  padding:15px 16px;font-size:15.5px;font-weight:700;line-height:1.4;
+  color:#7a5122;background:#f8ecd9;border:1px solid #e3c9a0;border-radius:12px;
+  display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;
+}
 .pal summary::marker{content:""}
 .pal summary::-webkit-details-marker{display:none}
+.pal summary .t-close{display:none}
+.pal summary .sub{margin-left:auto;font-size:11.5px;font-weight:400;color:#a48a5f}
 
 /* 展开后变成底部抽屉：正文留一半在屏幕上，点一下就能看到字形变化 */
 body.pal-open .wrap{padding-bottom:58vh}
 .pal[open]{
   position:fixed;left:0;right:0;bottom:0;z-index:45;margin:0;
   max-height:56vh;overflow-y:auto;
-  border:0;border-top:1px solid var(--line);border-radius:14px 14px 0 0;
+  border:0;border-radius:14px 14px 0 0;
   background:#fff;box-shadow:0 -8px 26px rgba(0,0,0,.15);
   padding-bottom:env(safe-area-inset-bottom);
   animation:rise .18s ease-out;
 }
 @keyframes rise{from{transform:translateY(24px);opacity:.5}to{transform:none;opacity:1}}
 .pal[open] summary{
-  position:sticky;top:0;z-index:3;background:#fff;
-  border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:7px;font-weight:600;color:#4d4438;
+  position:sticky;top:0;z-index:3;border:0;border-bottom:1px solid #e3c9a0;border-radius:0;
 }
-.pal[open] summary::before{content:"▾";font-size:11px;color:#a2967f}
-.pal:not([open]) summary::before{content:"▴";font-size:11px;color:#b3a795;margin-right:5px}
+.pal[open] summary .t-open{display:none}
+.pal[open] summary .t-close{display:inline}
+.pal[open] summary .sub{display:none}
 .pal .body{padding:4px 10px 12px;border-top:1px solid var(--line)}
 .pal h4{font-size:11.5px;color:var(--muted);margin:10px 0 6px;font-weight:600}
 .chars{display:flex;flex-wrap:wrap;gap:4px}
@@ -201,7 +206,11 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
   </p>
 
   <details class="pal">
-    <summary>字符表（点辅音会自动连写；点 a 收住音节）</summary>
+    <summary>
+      <span class="t-open">▴ 展开字符表</span>
+      <span class="t-close">▾ 收起字符表</span>
+      <span class="sub">按发音找字 · 拼叠字</span>
+    </summary>
     <div class="body" id="pal"></div>
   </details>
 </div>
@@ -377,6 +386,27 @@ function iastToSiddham(input){
 var $ = function(s){ return document.querySelector(s); };
 var paper = $("#paper"), size = 32;
 
+/* ---------------- 草稿自动保存 ----------------
+   手机切后台、手滑刷新、误关标签页都不至于把写好的字弄丢。 */
+var SAVE_KEY = "siddham-editor-draft", saveTimer = null;
+function saveDraft(){
+  try { localStorage.setItem(SAVE_KEY, paper.innerHTML); } catch (e) {}
+}
+(function restoreDraft(){
+  try {
+    var raw = localStorage.getItem(SAVE_KEY);
+    if (raw && raw.trim()) paper.innerHTML = raw;
+  } catch (e) {}
+})();
+paper.addEventListener("input", function(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveDraft, 500);
+});
+document.addEventListener("visibilitychange", function(){
+  if (document.hidden) { clearTimeout(saveTimer); saveDraft(); }
+});
+window.addEventListener("pagehide", saveDraft);
+
 if (document.fonts && document.fonts.load) {
   document.fonts.load('16px "SiddhamEmbed"').then(function(){
     var ok = document.fonts.check('16px "SiddhamEmbed"');
@@ -397,7 +427,8 @@ $("#plus").onclick = function(){ setSize(size + 4); };
 $("#minus").onclick = function(){ setSize(size - 4); };
 $("#clear").onclick = function(){
   if (!paper.innerText.trim() || confirm("清空当前内容？")) {
-    paper.innerHTML = ""; paper.focus();
+    paper.innerHTML = ""; paper.focus(); clearTimeout(saveTimer);
+    try { localStorage.removeItem(SAVE_KEY); } catch (e) {}
   }
 };
 
@@ -643,26 +674,6 @@ var ROMAN = {
   "CANDRABINDU":"m̐","ANUSVARA":"ṃ","VISARGA":"ḥ","VIRAMA":"连写","NUKTA":"附点"
 };
 
-/* 字符表按输入法规则工作：
-   辅音后面点「独立元音」，自动换成对应的元音附标（ka + ā → kā）；
-   辅音后面点「a」是内禀元音，不用加符号，直接提示。
-   连写（辅音簇）仍然手动点「连写」键，因为自动补会导致 dha+ka 这种音节边界被判错。 */
-function cpBeforeCaret(){
-  var sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return 0;
-  var r = sel.getRangeAt(0);
-  if (!paper.contains(r.startContainer)) return 0;
-  var node = r.startContainer, off = r.startOffset;
-  if (node.nodeType === 1) {                       // 光标停在元素节点之间（每次插入后就是这种）
-    if (!off) return 0;
-    node = node.childNodes[off - 1];
-    if (!node || node.nodeType !== 3) return 0;
-    off = node.data.length;
-  }
-  if (node.nodeType !== 3 || !off) return 0;
-  var arr = Array.from(node.data.slice(0, off));
-  return arr.length ? arr[arr.length - 1].codePointAt(0) : 0;
-}
 /* 字符表按输入法规则工作：
    · 默认「各点是各点」——不自动连写。要连写就点「连写」键，再点下一个辅音。
      这样单独写一个辅音（比如种子字）不会被自动粘上消元音号。
