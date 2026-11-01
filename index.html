@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>悉昙输入法 · 安卓安装</title>
+<title>悉昙字 · 手机上写</title>
 <style>
 :root{
   --bg:#faf7f2; --card:#fffdf9; --fg:#1c1813; --muted:#8b8175;
@@ -61,26 +61,43 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 <body>
 <div class="wrap">
 
-  <h1>悉昙输入法 · 安卓版</h1>
-  <p class="sub">手机上没有悉昙字体，所以这里准备了两样东西：一个能打的键盘，一个能看能导出的编辑器。</p>
+  <h1>悉昙字 · 手机上写</h1>
+  <p class="sub">安卓没有悉昙字体。这里给一个<b>自带字体</b>的网页编辑器——打开就能写，写完存成图片发出去，谁都能看。</p>
 
   <div class="card">
-    <h2><span class="n">1</span>先装 Keyman（键盘引擎）</h2>
-    <p>国内没有 Google Play，这里直接给官方 APK（SIL 原包，未做任何修改）。</p>
-    <a class="dl" href="keyman-android.apk" download>
-      <span>下载 Keyman 安卓版</span>
-      <small>APK · 12.3 MB · v18.0.254</small>
+    <h2><span class="n">1</span>打开编辑器（就这样，够了）</h2>
+    <p>字体嵌在页面里（约 82 KB），不用装任何东西，不用联网。可以打罗马字转写，也可以用字符表一个字一个字拼；写完存图片 / PDF。</p>
+    <a class="dl" href="editor.html?v=20261101">
+      <span>打开悉昙编辑器</span>
+      <small>不装东西 · 离线可用</small>
     </a>
-    <p class="muted">下载后点开安装。系统会提示「未知来源」，允许即可；装完在
-      <b>设置 → 语言和输入法</b> 里启用 Keyman。</p>
-    <p class="muted">下载不动的话，用 Keyman 官方直链：
-      <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk"
-         style="color:#8a6f4a">downloads.keyman.com（同一个文件）</a></p>
+    <div class="ok">
+      <b>建议：</b>用 Chrome / Edge / 小米浏览器 / Safari 打开本页。在微信里点开的话，
+      点右上角「···」→ <b>在浏览器打开</b>，否则下载和保存都会受限。
+    </div>
   </div>
 
+  <hr>
+
   <div class="card">
-    <h2><span class="n">2</span>导入悉昙键盘包（可选）</h2>
-    <p>想让键盘能直接打悉昙，就装这个（<code>.kmp</code>）。</p>
+    <h2><span class="n">2</span>想在微信里直接打字？（可选）</h2>
+    <p>装 Keyman 键盘后，可以在微信、备忘录、短信里<b>打出</b>悉昙字符。多数人不需要，看下面那句再决定。</p>
+
+    <div class="warn">
+      <b>先说清楚：</b>安卓系统里没有悉昙字体，所以装了键盘，在微信里<b>照样显示方框</b>。
+      键盘只保证「发出去的字符是对的」，不能让你看见。要看见，还是用上面的编辑器。
+    </div>
+
+    <p class="muted" style="margin-top:14px">第一步 · 装键盘引擎（SIL 官方原包，未修改）：</p>
+    <a class="dl alt" href="keyman-android.apk" download>
+      <span>下载 Keyman 安卓版</span>
+      <small>APK · 12.3 MB</small>
+    </a>
+    <p class="muted">下不动的话用官方直链：
+      <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk"
+         style="color:#8a6f4a">downloads.keyman.com</a></p>
+
+    <p class="muted" style="margin-top:14px">第二步 · 导入悉昙键盘包（<code>.kmp</code>）：</p>
     <a class="dl alt" href="siddham-iast.kmp" download>
       <span>下载悉昙键盘包</span>
       <small>.kmp · 121 KB</small>
@@ -88,43 +105,27 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
     <ul>
       <li>Keyman 菜单 → <b>Settings</b> → <b>Add Keyboard from Device</b></li>
       <li>选这个 <code>.kmp</code> → <b>Install</b></li>
+      <li>装完在 <b>设置 → 语言和输入法</b> 里启用 Keyman</li>
     </ul>
-    <div class="warn">
-      <b>注意：</b>安卓不允许装系统字体。键盘能打，但在微信、短信、备忘录里可能显示成方框——
-      这是系统字体缺失，不是键盘坏了（复制出来的字符仍然正确）。
-    </div>
-  </div>
-
-  <div class="card">
-    <h2><span class="n">3</span>要「看得见」，用编辑器</h2>
-    <p>这个网页把悉昙字体直接嵌在页面里，不需要系统有字体。可以打罗马字转写，
-      也可以配合 Keyman 直接打；写完存成图片或 PDF 发出去。</p>
-    <a class="dl" href="editor.html">
-      <span>打开悉昙编辑器</span>
-      <small>离线可用</small>
-    </a>
-    <div class="ok">
-      <b>建议：</b>用 Chrome / Edge / Safari 打开本页；在微信里点开的话，
-      右上角「···」→ <b>在浏览器打开</b>，否则下载会被限制。
-    </div>
   </div>
 
   <hr>
 
   <div class="card">
-    <h2>怎么打（编辑器里）</h2>
+    <h2>编辑器里怎么打</h2>
     <ul>
-      <li><b>不装键盘也能用</b>：在下面那行打罗马字，空格或回车就变成悉昙——<code>oṃ maṇi padme hūṃ</code></li>
-      <li><b>手机上打不出 <code>ā ī ṭ ṃ ḥ</code></b>：输入框下面有一排变音字母，点一下就插进去（末尾 <code>Aa</code> 切大写）</li>
-      <li><b>装了 Keyman</b>：切到「悉昙 IAST」直接打，一键一字符</li>
-      <li><b>导出</b>：<code>存图片</code>（PNG，长按保存）· <code>存 PDF</code>（打印里选「另存为 PDF」）</li>
+      <li><b>打罗马字</b>：在底部框里打 <code>oṃ maṇi padme hūṃ</code>，空格或回车，整段变悉昙插到正文</li>
+      <li><b>打不出 <code>ā ī ṭ ṃ ḥ</code></b>：输入框下面有一排变音字母，点一下就插进去（末尾 <code>Aa</code> 切大写）</li>
+      <li><b>用字符表拼</b>：点开底部的字符表，每个键都标了发音（ka / kha / ga…）。
+        叠字就「辅音 → <b>连写</b> → 下一个辅音」，重复几次就是三叠、四叠、五叠</li>
+      <li><b>导出</b>：存图片（PNG，长按保存）· 存 PDF（打印里选「另存为 PDF」）</li>
     </ul>
   </div>
 
   <footer>
     Keyman for Android 18.0.254 · SIL 开源软件（MIT），本页提供的是官方原包<br>
     MD5 <code>14DEBF2FBA3CCDB3D277A83D1F1BCDE6</code><br>
-    字体 Noto Sans Siddham（SIL OFL 1.1）· 页面完全离线，不上传任何内容
+    字体 Noto Sans Siddham（SIL OFL 1.1）· 编辑器完全离线，不上传任何内容
   </footer>
 </div>
 </body>
