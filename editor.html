@@ -100,7 +100,7 @@ button.ghost{background:transparent}
 .hint code{font-family:Menlo,"PingFang SC",monospace;background:#f0e9dd;padding:1px 4px;border-radius:4px}
 
 /* 字符表入口：未展开时就是一条醒目的黄底按钮 */
-.pal{margin-top:16px;border:0;background:transparent;overflow:visible}
+.pal{margin-top:24px;border:0;background:transparent;overflow:visible}
 .pal summary{
   padding:15px 16px;font-size:15.5px;font-weight:700;line-height:1.4;
   color:#7a5122;background:#f8ecd9;border:1px solid #e3c9a0;border-radius:12px;
@@ -142,7 +142,7 @@ body.pal-open .wrap{padding-bottom:58vh}
 /* 连写键：辅音组第一个，底色区分，拼叠字靠它 */
 .chars button.vir{background:#f8ecd9;border-color:#dcc09a}
 .chars button.vir .l{color:#8a5f2a;font-weight:700;font-size:10px}
-.pal-tools{display:flex;gap:8px;margin:14px 0 4px;padding-top:12px;border-top:1px dashed var(--line)}
+.pal-tools{display:flex;gap:8px;margin:0 0 14px;padding-bottom:12px;border-bottom:1px dashed var(--line)}
 .pal-tools button{flex:1;font-family:inherit;font-size:13px;padding:10px 0;min-width:0;
   background:#fdfbf7}
 .pal-tip{font-size:11.5px;color:#7a6d5c;background:#f7f1e6;border-radius:8px;
@@ -158,6 +158,38 @@ body.pal-open .wrap{padding-bottom:58vh}
 #shot .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 
 footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:var(--muted);line-height:1.9}
+
+/* 留言入口与留言面板（只在有后端时出现） */
+.fblink{display:block;margin:12px auto 4px;font:inherit;font-size:12px;color:#8a6f4a;
+  background:transparent;border:1px solid #ddcbb0;border-radius:99px;padding:8px 16px}
+.fblink:active{background:#f7f1e6}
+#fb{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;
+  max-height:76vh;max-width:640px;margin:0 auto;
+  background:#fff;border-radius:14px 14px 0 0;
+  box-shadow:0 -8px 26px rgba(0,0,0,.16);
+  padding-bottom:env(safe-area-inset-bottom);
+  animation:rise .18s ease-out}
+#fb.on{display:flex;flex-direction:column}
+.sheet-hd{display:flex;align-items:center;gap:10px;padding:14px 16px;
+  border-bottom:1px solid var(--line);color:#4d4438}
+.sheet-hd b{flex:1;font-size:15px}
+#fbclose{font-size:12px;padding:6px 12px;border-radius:99px;background:#fdfbf7}
+.fb-body{overflow-y:auto;padding:12px 16px 20px;-webkit-overflow-scrolling:touch}
+.fb-form textarea{width:100%;font:inherit;font-size:14px;line-height:1.6;
+  padding:10px 12px;border:1px solid var(--line);border-radius:10px;outline:none;resize:vertical;
+  background:#fdfbf7}
+.fb-form textarea:focus{border-color:#c9b591}
+.fb-row{display:flex;gap:8px;margin-top:9px}
+.fb-row input{flex:1;min-width:0;font:inherit;font-size:13px;padding:9px 11px;
+  border:1px solid var(--line);border-radius:9px;outline:none;background:#fff}
+.fb-row button{padding:9px 18px;border-radius:9px;background:var(--accent);
+  color:#fff;border-color:var(--accent);font-weight:600}
+.fb-row button:disabled{opacity:.5}
+.fb-item{padding:12px 0;border-bottom:1px solid #f1e9dc}
+.fb-item:last-child{border-bottom:0}
+.fb-meta{font-size:11.5px;color:#a2967f;margin-bottom:4px}
+.fb-text{font-size:13.5px;color:#3f3730;line-height:1.68;white-space:pre-wrap;word-break:break-word}
+.fb-empty{font-size:12.5px;color:#a2967f;padding:20px 0;text-align:center}
 
 @media print{
   .bar,.pal,.row,.acc,#pv,.hint,footer,#shot{display:none !important}
@@ -192,18 +224,7 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
   </div>
   <div class="acc" id="acc"></div>
   <div id="pv"></div>
-  <p class="hint">
-    这一页<b>自带字体</b>（约 82 KB 嵌在文件里），所以在没有悉昙字体的安卓手机上也能正常显示、正常导出。<br>
-    字号：<code>A− / A+</code>　导出：<code>存图片</code>（PNG，可长按保存）· <code>存 PDF</code>（打印对话框里选「另存为 PDF」）<br>
-    <b>手机上请用浏览器打开</b>（Safari / Chrome / Edge 都行），别在微信里直接点开——微信内置浏览器保存文件会受限。
-  </p>
-
-  <p class="hint">
-    想在<b>微信 / 备忘录</b>里直接打悉昙？<a href="keyman-android.apk" download>装 Keyman 键盘（APK）</a>
-    · <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk" target="_blank" rel="noopener">官方直链</a><br>
-    <span style="color:#b9ad99">不过安卓没有悉昙字体，装了在微信里照样显示方框——键盘只保证「发出去的字符是对的」。
-      要「看得见」，就用这个编辑器。</span>
-  </p>
+  <p class="hint">微信里打开的，点右上角「···」→「在浏览器打开」，不然存不了图。</p>
 
   <details class="pal">
     <summary>
@@ -216,8 +237,26 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 </div>
 
 <footer>
-  字体：Noto Sans Siddham（SIL OFL 1.1）。页面完全离线，不上传任何内容。
+  字体：Noto Sans Siddham（SIL OFL 1.1）。写作内容只存在你自己的浏览器里，不上传。
+  <button type="button" id="fbopen" class="fblink" hidden>留言 / 改进建议</button>
 </footer>
+
+<div id="fb" class="sheet">
+  <div class="sheet-hd">
+    <b>留言 / 改进建议</b>
+    <button type="button" id="fbclose">收起</button>
+  </div>
+  <div class="fb-body">
+    <div class="fb-form">
+      <textarea id="fbtext" maxlength="400" rows="3" placeholder="哪里不好用？想要什么功能？想加哪些字？"></textarea>
+      <div class="fb-row">
+        <input id="fbname" maxlength="20" placeholder="署名（可留空）">
+        <button type="button" id="fbsend">提交</button>
+      </div>
+    </div>
+    <div id="fblist"><div class="fb-empty">加载中…</div></div>
+  </div>
+</div>
 
 <div id="shot">
   <div class="inner">
@@ -749,6 +788,17 @@ function palBack(){
   tip.innerHTML = "<b>连写默认关着</b>——单点辅音就是独立的字。要叠字就：<b>辅音 → 连写 → 下一个辅音</b>，" +
                   "重复几次就是三叠、四叠、五叠。";
   host.appendChild(tip);
+  /* 空格 / 退格：放在最上面，不用滚到最底才够得着 */
+  var tools = document.createElement("div");
+  tools.className = "pal-tools";
+  var sp = document.createElement("button");
+  sp.type = "button"; sp.textContent = "空格";
+  sp.onclick = function(){ insertText(" "); };
+  var bk = document.createElement("button");
+  bk.type = "button"; bk.textContent = "⌫ 退格";
+  bk.onclick = palBack;
+  tools.appendChild(sp); tools.appendChild(bk);
+  host.appendChild(tools);
   PAL.forEach(function(grp){
     var h = document.createElement("h4");
     var extra = (grp.label === "辅音") ? 1 : (grp.label === "附加" ? -1 : 0);
@@ -780,22 +830,91 @@ function palBack(){
     host.appendChild(box);
   });
 
-  /* 底部功能键：空格（分词）/ 退格 */
-  var tools = document.createElement("div");
-  tools.className = "pal-tools";
-  var sp = document.createElement("button");
-  sp.type = "button"; sp.textContent = "空格";
-  sp.onclick = function(){ insertText(" "); };
-  var bk = document.createElement("button");
-  bk.type = "button"; bk.textContent = "⌫ 退格";
-  bk.onclick = palBack;
-  tools.appendChild(sp); tools.appendChild(bk);
-  host.appendChild(tools);
 
   /* 展开 → 变底部抽屉，正文自动让出上半屏 */
   var d = document.querySelector("details.pal");
   d.addEventListener("toggle", function(){
     document.body.classList.toggle("pal-open", d.open);
+  });
+})();
+
+/* ---------------- 留言板 ----------------
+   需要后端（server.js 的 /api/feedback）。纯静态托管时接口 404，入口自动隐藏。 */
+(function(){
+  var API = location.pathname.replace(/[^\/]*$/, "") + "api/feedback";
+  var btn = $("#fbopen"), sheet = $("#fb"), list = $("#fblist"),
+      txt = $("#fbtext"), nameEl = $("#fbname"), send = $("#fbsend");
+
+  function fmt(ts){
+    var d = new Date(ts);
+    if (isNaN(d.getTime())) return "";
+    var p2 = function(n){ return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()) + " " +
+           p2(d.getHours()) + ":" + p2(d.getMinutes());
+  }
+  function empty(msg){
+    var e = document.createElement("div");
+    e.className = "fb-empty"; e.textContent = msg;
+    return e;
+  }
+  function render(items, total){
+    list.innerHTML = "";
+    if (!items.length) { list.appendChild(empty("还没有人留言，你是第一个。")); return; }
+    items.forEach(function(it){
+      var d = document.createElement("div"); d.className = "fb-item";
+      var m = document.createElement("div"); m.className = "fb-meta";
+      m.textContent = (it.name || "匿名") + " · " + fmt(it.ts);
+      var t = document.createElement("div"); t.className = "fb-text";
+      t.textContent = it.text;
+      d.appendChild(m); d.appendChild(t);
+      list.appendChild(d);
+    });
+    if (total > items.length) {
+      list.appendChild(empty("只显示最近 " + items.length + " 条（共 " + total + " 条）"));
+    }
+  }
+  function load(){
+    fetch(API, { cache: "no-store" }).then(function(r){
+      if (!r.ok) throw new Error("bad");
+      return r.json();
+    }).then(function(d){
+      render(d.items || [], d.total || 0);
+    }).catch(function(){
+      list.innerHTML = "";
+      list.appendChild(empty("留言板连不上，可能是网络问题，稍后再试。"));
+    });
+  }
+
+  // 后端在才露出入口；纯静态站点这里会 404，按钮保持隐藏
+  fetch(API, { cache: "no-store" }).then(function(r){
+    if (!r.ok) throw new Error("bad");
+    return r.json();
+  }).then(function(){ btn.hidden = false; }).catch(function(){});
+
+  btn.addEventListener("click", function(){
+    var pal = document.querySelector("details.pal");
+    if (pal && pal.open) pal.open = false;
+    sheet.classList.add("on");
+    load();
+  });
+  $("#fbclose").addEventListener("click", function(){ sheet.classList.remove("on"); });
+
+  send.addEventListener("click", function(){
+    var v = txt.value.trim();
+    if (v.length < 2) { toast("写两句再提交"); return; }
+    send.disabled = true;
+    fetch(API, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ text: v, name: nameEl.value.trim() })
+    }).then(function(r){
+      return r.json().then(function(j){ return { ok: r.ok, j: j }; });
+    }).then(function(res){
+      if (!res.ok) throw new Error(res.j.error || "提交失败");
+      txt.value = ""; toast("收到，谢谢！"); load();
+    }).catch(function(e){
+      toast(e.message || "提交失败，稍后再试");
+    }).then(function(){ send.disabled = false; });
   });
 })();
 
