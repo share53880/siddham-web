@@ -134,6 +134,9 @@ body.pal-open .wrap{padding-bottom:58vh}
 .chars button .g{font-family:"SiddhamEmbed",sans-serif;font-size:21px;line-height:1.15}
 .chars button .l{font-family:-apple-system,"PingFang SC",sans-serif;font-size:9.5px;
   line-height:1;color:#9b8f7c;letter-spacing:.2px}
+/* 连写键：辅音组第一个，底色区分，拼叠字靠它 */
+.chars button.vir{background:#f8ecd9;border-color:#dcc09a}
+.chars button.vir .l{color:#8a5f2a;font-weight:700;font-size:10px}
 .pal-tools{display:flex;gap:8px;margin:14px 0 4px;padding-top:12px;border-top:1px dashed var(--line)}
 .pal-tools button{flex:1;font-family:inherit;font-size:13px;padding:10px 0;min-width:0;
   background:#fdfbf7}
@@ -523,11 +526,14 @@ $("#copy").onclick = function(){
 function toast(msg){
   var d = document.createElement("div");
   d.textContent = msg;
-  d.style.cssText = "position:fixed;left:50%;top:58px;transform:translateX(-50%);background:#2c261e;color:#fff;" +
-    "padding:9px 16px;border-radius:99px;font-size:13px;z-index:99;opacity:0;transition:opacity .18s";
+  // 字符表抽屉打开时，提示条贴在抽屉上沿，别压住正文字
+  var palEl = document.querySelector("details.pal");
+  var y = (palEl && palEl.open) ? Math.max(56, palEl.getBoundingClientRect().top - 52) : 62;
+  d.style.cssText = "position:fixed;left:50%;top:" + y + "px;transform:translateX(-50%);background:#2c261e;color:#fff;" +
+    "padding:9px 16px;border-radius:99px;font-size:12.5px;max-width:86vw;text-align:center;z-index:99;opacity:0;transition:opacity .18s";
   document.body.appendChild(d);
   requestAnimationFrame(function(){ d.style.opacity = "1"; });
-  setTimeout(function(){ d.style.opacity = "0"; setTimeout(function(){ d.remove(); }, 200); }, 1400);
+  setTimeout(function(){ d.style.opacity = "0"; setTimeout(function(){ d.remove(); }, 200); }, 1800);
 }
 
 function wrapLines(ctx, text, maxW){
@@ -727,25 +733,36 @@ function palBack(){
   var host = $("#pal");
   var tip = document.createElement("div");
   tip.className = "pal-tip";
-  tip.innerHTML = "点辅音会<b>自动连写</b>——连点就是三叠、四叠、五叠。要断开或在两字之间收住音节，点一下 <b>a</b>（a 是默认元音，不写字）。";
+  tip.innerHTML = "<b>叠字</b>：辅音 → <b>连写</b> → 下一个辅音，重复就是三叠、四叠、五叠（辅音直接连点也会自动连写）。" +
+                  "要断开或收住音节就点一下 <b>a</b>——a 是默认元音，不写字。";
   host.appendChild(tip);
   PAL.forEach(function(grp){
     var h = document.createElement("h4");
-    h.textContent = grp.label + "（" + grp.items.length + "）";
+    var extra = (grp.label === "辅音") ? 1 : (grp.label === "附加" ? -1 : 0);
+    h.textContent = grp.label + "（" + (grp.items.length + extra) + "）";
     host.appendChild(h);
     var box = document.createElement("div");
     box.className = "chars";
-    grp.items.forEach(function(it){
+
+    function mkKey(c, name, cls){
       var b = document.createElement("button");
-      var g = document.createElement("span"); g.className = "g"; g.textContent = it.c;
+      var g = document.createElement("span"); g.className = "g"; g.textContent = c;
       b.appendChild(g);
-      var rm = ROMAN[it.n];
       var l = document.createElement("span"); l.className = "l";
-      l.textContent = rm || "\u00A0";
+      l.textContent = ROMAN[name] || "\u00A0";
       b.appendChild(l);
-      b.title = it.n;
-      b.onclick = function(){ palType(it.c.codePointAt(0)); };
-      box.appendChild(b);
+      b.title = name;
+      if (cls) b.className = cls;
+      b.onclick = function(){ palType(c.codePointAt(0)); };
+      return b;
+    }
+
+    // 连写键放在辅音组第一个——拼叠字最常用的就是它
+    if (grp.label === "辅音") box.appendChild(mkKey("𑖿", "VIRAMA", "vir"));
+
+    grp.items.forEach(function(it){
+      if (grp.label === "附加" && it.n === "VIRAMA") return;   // 已挪到辅音组首位
+      box.appendChild(mkKey(it.c, it.n));
     });
     host.appendChild(box);
   });
