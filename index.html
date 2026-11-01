@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-<title>悉昙字 · 手机上写</title>
+<title>悉昙字输入法 · 下载</title>
 <style>
 :root{
   --bg:#faf7f2; --card:#fffdf9; --fg:#1c1813; --muted:#8b8175;
@@ -13,24 +13,40 @@
 html,body{margin:0;max-width:100%;overflow-x:hidden}
 body{
   background:var(--bg);color:var(--fg);
-  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Apple Symbols","Noto Sans SC",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",sans-serif;
   -webkit-text-size-adjust:100%;line-height:1.7;
 }
 .wrap{max-width:720px;margin:0 auto;padding:28px 16px 70px}
 h1{font-size:clamp(21px,5.6vw,27px);margin:0 0 6px;letter-spacing:.2px}
-.sub{font-size:13px;color:var(--muted);margin:0 0 22px}
+.sub{font-size:13px;color:var(--muted);margin:0 0 20px}
+
+/* 平台切换 */
+.tabs{display:flex;gap:8px;margin:0 0 18px;position:sticky;top:0;z-index:9;
+  background:var(--bg);padding:8px 0 10px}
+.tab{
+  flex:1;appearance:none;border:1px solid var(--line);background:var(--card);
+  color:#5c5142;font-size:13.5px;font-weight:600;padding:11px 6px;border-radius:10px;
+  cursor:pointer;font-family:inherit;line-height:1.3;
+}
+.tab small{display:block;font-weight:400;font-size:10.5px;opacity:.65;margin-top:2px}
+.tab[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab[aria-selected="true"] small{opacity:.8}
+
+.panel{display:none}
+.panel.on{display:block}
 
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
   padding:16px 16px 14px;margin-bottom:14px;
 }
-.card h2{font-size:15px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.card h2{font-size:15px;margin:0 0 4px;display:flex;align-items:center;gap:8px;line-height:1.5}
 .card h2 .n{
   width:22px;height:22px;border-radius:50%;background:var(--soft);color:#7a6242;
-  font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex:none;
+  font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex:none;font-weight:600;
 }
 .card p{font-size:13px;color:#5c5142;margin:6px 0 0}
 .card p.muted{color:var(--muted);font-size:12px}
+h3.sec{font-size:13px;color:var(--muted);font-weight:600;margin:22px 0 8px;letter-spacing:.4px}
 
 a.dl{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -50,83 +66,234 @@ a.dl:active{transform:translateY(1px)}
   background:#eef5ee;border-left:3px solid #7fa07f;border-radius:8px;
   padding:11px 13px;font-size:12.5px;color:#425f42;margin:14px 0 0;
 }
-ul{margin:8px 0 0;padding-left:20px;font-size:13px;color:#5c5142}
-li{margin:3px 0}
+ul,ol{margin:8px 0 0;padding-left:20px;font-size:13px;color:#5c5142}
+li{margin:5px 0}
 code{font-family:Menlo,"PingFang SC",monospace;background:#f0e9dd;padding:1px 5px;border-radius:4px;font-size:12px}
 footer{font-size:11.5px;color:#a89c8c;margin-top:26px;line-height:1.9;text-align:center}
 hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-.sd{font-family:"SiddhamEmbed",serif;font-size:22px}
+a.inline{color:var(--accent)}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <h1>悉昙字 · 手机上写</h1>
-  <p class="sub">安卓没有悉昙字体。这里给一个<b>自带字体</b>的网页编辑器——打开就能写，写完存成图片发出去，谁都能看。</p>
+  <h1>悉昙字输入法</h1>
+  <p class="sub">用 IAST 罗马字直接打出梵文悉昙体。选你的系统，按步骤装一次，之后随时用。</p>
 
-  <div class="card">
-    <h2><span class="n">1</span>打开编辑器（就这样，够了）</h2>
-    <p>字体嵌在页面里（约 82 KB），不用装任何东西，不用联网。可以打罗马字转写，也可以用字符表一个字一个字拼；写完存图片 / PDF。</p>
-    <a class="dl" href="editor.html?v=20261101">
-      <span>打开悉昙编辑器</span>
-      <small>不装东西 · 离线可用</small>
-    </a>
-    <div class="ok">
-      <b>建议：</b>用 Chrome / Edge / 小米浏览器 / Safari 打开本页。在微信里点开的话，
-      点右上角「···」→ <b>在浏览器打开</b>，否则下载和保存都会受限。
-    </div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-p="mac" aria-selected="false">Mac<small>macOS</small></button>
+    <button class="tab" role="tab" data-p="ios" aria-selected="false">iPhone<small>iPad 同</small></button>
+    <button class="tab" role="tab" data-p="android" aria-selected="false">安卓<small>Android</small></button>
   </div>
 
-  <hr>
-
-  <div class="card">
-    <h2><span class="n">2</span>想在微信里直接打字？（可选）</h2>
-    <p>装 Keyman 键盘后，可以在微信、备忘录、短信里<b>打出</b>悉昙字符。多数人不需要，看下面那句再决定。</p>
+  <!-- ===================== Mac ===================== -->
+  <section class="panel" id="p-mac" role="tabpanel">
 
     <div class="warn">
-      <b>先说清楚：</b>安卓系统里没有悉昙字体，所以装了键盘，在微信里<b>照样显示方框</b>。
-      键盘只保证「发出去的字符是对的」，不能让你看见。要看见，还是用上面的编辑器。
+      <b>先看清楚：</b>Mac 上可以选「装 Keyman」或「用系统原生布局」，两种都行。<br>
+      <b>装 Keyman</b>——三分钟搞定，键位和 iPhone 版完全一样，推荐给大多数人。<br>
+      <b>原生布局</b>——不装任何第三方软件，但要注销重登一次，适合不想多装 App 的人。
     </div>
 
-    <p class="muted" style="margin-top:14px">第一步 · 装键盘引擎（SIL 官方原包，未修改）：</p>
-    <a class="dl alt" href="keyman-android.apk" download>
-      <span>下载 Keyman 安卓版</span>
-      <small>APK · 12.3 MB</small>
-    </a>
-    <p class="muted">下不动的话用官方直链：
-      <a href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk"
-         style="color:#8a6f4a">downloads.keyman.com</a></p>
+    <h3 class="sec">方式 A · 用 Keyman（推荐）</h3>
 
-    <p class="muted" style="margin-top:14px">第二步 · 导入悉昙键盘包（<code>.kmp</code>）：</p>
-    <a class="dl alt" href="siddham-iast.kmp" download>
-      <span>下载悉昙键盘包</span>
-      <small>.kmp · 121 KB</small>
-    </a>
-    <ul>
-      <li>Keyman 菜单 → <b>Settings</b> → <b>Add Keyboard from Device</b></li>
-      <li>选这个 <code>.kmp</code> → <b>Install</b></li>
-      <li>装完在 <b>设置 → 语言和输入法</b> 里启用 Keyman</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h2><span class="n">1</span>装 Keyman for macOS</h2>
+      <p>Keyman 是 SIL 出的免费开源输入法框架，Mac 版官方下载：</p>
+      <a class="dl alt" href="https://keyman.com/macos/" target="_blank" rel="noopener">
+        <span>去 keyman.com 下载</span><small>官方 · 免费</small>
+      </a>
+      <p class="muted">装完打开一次，让它出现在菜单栏。</p>
+    </div>
 
-  <hr>
+    <div class="card">
+      <h2><span class="n">2</span>装悉昙键盘包</h2>
+      <a class="dl" href="siddham-iast-mac.kmp" download>
+        <span>下载 Mac 版键盘包</span><small>.kmp · 120 KB</small>
+      </a>
+      <ul>
+        <li>下载完<b>双击</b>这个 <code>.kmp</code>，Keyman 会弹窗问是否安装 → 点 <b>Install</b></li>
+        <li>双击没反应？打开 Keyman → <b>Configuration</b> → <b>Install keyboard</b> → 选这个文件</li>
+        <li>装完在菜单栏 Keyman 图标里切到 <b>Siddham IAST</b></li>
+      </ul>
+      <p class="muted">包里已经带了 Noto Sans Siddham 字体，不用另外装。</p>
+    </div>
 
-  <div class="card">
-    <h2>编辑器里怎么打</h2>
-    <ul>
-      <li><b>打罗马字</b>：在底部框里打 <code>oṃ maṇi padme hūṃ</code>，空格或回车，整段变悉昙插到正文</li>
-      <li><b>打不出 <code>ā ī ṭ ṃ ḥ</code></b>：输入框下面有一排变音字母，点一下就插进去（末尾 <code>Aa</code> 切大写）</li>
-      <li><b>用字符表拼</b>：点开底部的字符表，每个键都标了发音（ka / kha / ga…）。
-        叠字就「辅音 → <b>连写</b> → 下一个辅音」，重复几次就是三叠、四叠、五叠</li>
-      <li><b>导出</b>：存图片（PNG，长按保存）· 存 PDF（打印里选「另存为 PDF」）</li>
-    </ul>
-  </div>
+    <h3 class="sec">方式 B · 系统原生布局（不装软件）</h3>
+
+    <div class="card">
+      <h2><span class="n">1</span>下载并解压</h2>
+      <a class="dl alt" href="siddham-mac-native.zip" download>
+        <span>下载原生键盘布局</span><small>.zip · 116 KB</small>
+      </a>
+      <p class="muted">解压得到一个文件夹，里面有安装脚本和字体。<b>请不要在压缩包里直接双击</b>。</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">2</span>双击「安装.command」</h2>
+      <ul>
+        <li>脚本只往你自己家目录写两个位置：<code>~/Library/Keyboard Layouts/</code> 和 <code>~/Library/Fonts/</code></li>
+        <li>不需要管理员密码，不碰系统目录</li>
+        <li>如果提示「无法打开，来自身份不明的开发者」：在文件上<b>右键 → 打开</b>，再点一次「打开」</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">3</span>注销重登，再添加键盘</h2>
+      <p>键盘布局<b>只在登录时被系统扫描</b>，不注销就不会出现。</p>
+      <ul>
+        <li>注销一次（或重启），重新登录</li>
+        <li>系统设置 → 键盘 → 文字输入 → 输入法 → <b>编辑…</b> → 点 <b>＋</b></li>
+        <li>在「印地语」分类下找 <b>悉昙 IAST</b>，添加</li>
+        <li>用 <code>Control + 空格</code> 或菜单栏图标切换</li>
+      </ul>
+      <div class="ok">不想要了：文件夹里的<b>「卸载.command」</b>双击一下就清干净。</div>
+    </div>
+
+    <p class="muted" style="font-size:12px;margin-top:16px">
+      完整键位与用法：<a class="inline" href="install-mac.html">Mac 操作说明 →</a>
+    </p>
+  </section>
+
+  <!-- ===================== iOS ===================== -->
+  <section class="panel" id="p-ios" role="tabpanel">
+
+    <div class="warn">
+      <b>顺序很重要：</b>先装 Keyman，并把它加进系统键盘（第 1、2 步），<b>再去下载键盘包</b>。<br>
+      顺序反了的话，包能装进去，但键盘不会出现在地球键里，很容易误以为这个包没用。
+    </div>
+
+    <div class="card">
+      <h2><span class="n">1</span>App Store 装 Keyman</h2>
+      <p>搜 <b>Keyman</b>（SIL 出的免费开源键盘 App），装完打开一次。</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">2</span>把 Keyman 加进系统键盘</h2>
+      <ul>
+        <li>设置 → 通用 → 键盘 → 键盘 → <b>添加新键盘</b></li>
+        <li>在「第三方键盘」里选 <b>Keyman</b></li>
+        <li>点进 Keyman 那一项，把 <b>允许完全访问</b> 打开</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">3</span>下载键盘包</h2>
+      <a class="dl" href="siddham-iast.kmp" download>
+        <span>下载 iPhone 键盘包</span><small>.kmp · 121 KB</small>
+      </a>
+      <p class="muted">点完会存到「文件」App 里（一般在「下载」文件夹）。包里已带字体，不用另外装。</p>
+      <div class="warn" style="margin-top:12px">
+        <b>如果你是在微信里打开的这页：</b>右上角 <b>···</b> → <b>在 Safari 中打开</b>，
+        再点上面的下载。微信内置浏览器存下来的文件 Keyman 读不到。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">4</span>用 Keyman 打开它</h2>
+      <ul>
+        <li>打开「文件」App → 找到刚下载的 <code>.kmp</code> → <b>点一下</b></li>
+        <li>选「用 <b>Keyman</b> 打开」→ 点 <b>Install</b></li>
+        <li>没弹出？打开 Keyman → 右上角 <b>···</b> → <b>Settings</b> → <b>Install From File</b> → 选它</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">5</span>装字体（最容易漏的一步）</h2>
+      <p>iPhone 系统里没有悉昙字体。安装过程中 Keyman 会弹出一个 <b>Install</b> 提示，问你要不要装字体描述文件——<b>务必点它</b>。</p>
+      <ul>
+        <li>点完会跳到：设置 → 通用 → <b>VPN 与设备管理</b> → 已下载的描述文件</li>
+        <li>点进去 → <b>安装</b> → 输锁屏密码</li>
+      </ul>
+      <div class="warn">漏了这步的症状：Keyman 里看着一切正常，一进备忘录、微信，字全变<b>方框</b>。</div>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">6</span>开始打字</h2>
+      <p>输入时点地球键切到 <b>Siddham IAST</b>。长按字母键出送气音（<code>k</code> 长按出 <b>kh</b>）。</p>
+      <p class="muted">打不出 <code>ā ī ṭ ṃ ḥ</code>？用附标层，或者直接用下面的网页编辑器。</p>
+    </div>
+
+    <p class="muted" style="font-size:12px;margin-top:16px">
+      完整说明与排错表：<a class="inline" href="install-ios.html">iPhone 安装说明 →</a>　
+      键位怎么用：<a class="inline" href="manual-mobile.html">手机操作说明 →</a>
+    </p>
+  </section>
+
+  <!-- ===================== Android ===================== -->
+  <section class="panel" id="p-android" role="tabpanel">
+
+    <div class="ok">
+      <b>先说句实话：</b>安卓系统里没有悉昙字体，装了键盘，在微信里<b>照样显示方框</b>。
+      键盘只保证「发出去的字符是对的」，不能让你看见。<br>
+      想<b>看见</b>字，用下面那个<b>自带字体的网页编辑器</b>，不用装任何东西。
+    </div>
+
+    <div class="card">
+      <h2><span class="n">1</span>打开网页编辑器（多数人只需要这个）</h2>
+      <p>字体嵌在页面里，打开就能写，写完存成图片发出去，谁都能看。可以打罗马字转写，也可以点字符表一个个拼。</p>
+      <a class="dl" href="editor.html?v=20261101">
+        <span>打开悉昙编辑器</span><small>不装东西 · 离线可用</small>
+      </a>
+    </div>
+
+    <hr>
+
+    <div class="card">
+      <h2><span class="n">2</span>想在微信里直接打字？（可选）</h2>
+      <p class="muted">第一步 · 装键盘引擎（SIL 官方原包，未修改）：</p>
+      <a class="dl alt" href="keyman-android.apk" download>
+        <span>下载 Keyman 安卓版</span><small>APK · 12.3 MB</small>
+      </a>
+      <p class="muted">下不动的话用官方直链：
+        <a class="inline" href="https://downloads.keyman.com/android/stable/18.0.254/keyman-18.0.254.apk">downloads.keyman.com</a></p>
+
+      <p class="muted" style="margin-top:14px">第二步 · 导入悉昙键盘包（<code>.kmp</code>）：</p>
+      <a class="dl alt" href="siddham-iast.kmp" download>
+        <span>下载悉昙键盘包</span><small>.kmp · 121 KB</small>
+      </a>
+      <ul>
+        <li>Keyman 菜单 → <b>Settings</b> → <b>Add Keyboard from Device</b></li>
+        <li>选这个 <code>.kmp</code> → <b>Install</b></li>
+        <li>装完在 <b>设置 → 语言和输入法</b> 里启用 Keyman</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>编辑器里怎么打</h2>
+      <ul>
+        <li><b>打罗马字</b>：底部框打 <code>oṃ maṇi padme hūṃ</code>，空格或回车，整段变悉昙插到正文</li>
+        <li><b>打不出 <code>ā ī ṭ ṃ ḥ</code></b>：输入框下面有一排变音字母，点一下就插进去</li>
+        <li><b>用字符表拼</b>：叠字就「辅音 → 连写 → 下一个辅音」，重复就是三叠、四叠、五叠</li>
+        <li><b>导出</b>：存图片（PNG，长按保存）· 存 PDF</li>
+      </ul>
+    </div>
+  </section>
 
   <footer>
-    Keyman for Android 18.0.254 · SIL 开源软件（MIT），本页提供的是官方原包<br>
-    MD5 <code>14DEBF2FBA3CCDB3D277A83D1F1BCDE6</code><br>
-    字体 Noto Sans Siddham（SIL OFL 1.1）· 编辑器完全离线，不上传任何内容
+    基于 Keyman（SIL 开源，MIT）· 字体 Noto Sans Siddham（SIL OFL 1.1）<br>
+    所有安装包可直接转发，无账号、无追踪 · 网页编辑器完全离线，不上传任何内容
   </footer>
 </div>
+
+<script>
+(function(){
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  var panels = {mac:document.getElementById('p-mac'),
+                ios:document.getElementById('p-ios'),
+                android:document.getElementById('p-android')};
+  function show(p){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.p === p)); });
+    Object.keys(panels).forEach(function(k){ panels[k].classList.toggle('on', k === p); });
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ show(t.dataset.p); }); });
+
+  // 按设备自动选：iPhone/iPad → iOS，安卓 → 安卓，Mac → Mac
+  var ua = navigator.userAgent, d = 'mac';
+  if (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) d = 'ios';
+  else if (/Android/i.test(ua)) d = 'android';
+  show(d);
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>悉昙 IAST 输入法 · iPhone 安装说明</title>
+<style>
+  :root{
+    --bg:#f6f3ee; --card:#fffefb; --ink:#2a2622; --ink2:#6b6259; --line:#e3ddd2;
+    --accent:#9c5b3c; --ok:#3f7a52; --warn:#a8642a; --code:#f2ede5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.72 -apple-system,"PingFang SC","Helvetica Neue",sans-serif;}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 20px 64px}
+  h1{font-size:24px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--ink2);font-size:13.5px;margin-bottom:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  h2{font-size:17px;margin:0 0 12px;padding-left:10px;border-left:3px solid var(--accent)}
+  h3{font-size:14.5px;margin:16px 0 8px;color:var(--ink)}
+  p{margin:9px 0}
+  ol,ul{margin:9px 0 9px 22px;padding:0}
+  li{margin:7px 0}
+  code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:13px;
+    font-family:ui-monospace,Menlo,monospace}
+  .sd{font-size:19px;line-height:1}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:#f3efe8;font-weight:600}
+  .steps{counter-reset:s;list-style:none;margin-left:0}
+  .steps>li{counter-increment:s;position:relative;padding-left:34px;margin:13px 0}
+  .steps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:23px;height:23px;
+    background:var(--accent);color:#fff;border-radius:50%;font-size:12.5px;line-height:23px;
+    text-align:center;font-weight:600}
+  .tag{display:inline-block;font-size:11.5px;font-weight:600;color:#fff;background:var(--accent);
+    border-radius:5px;padding:2px 7px;margin-left:7px;vertical-align:2px}
+  .tag.ok{background:var(--ok)} .tag.warn{background:var(--warn)}
+  .warnbox{background:#fdf6ec;border:1px solid #eeddc2;border-left:3px solid var(--warn);
+    border-radius:8px;padding:12px 14px;margin:12px 0}
+  .okbox{background:#f1f7f2;border:1px solid #cfe3d4;border-left:3px solid var(--ok);
+    border-radius:8px;padding:12px 14px;margin:12px 0}
+  .muted{color:var(--ink2);font-size:13.5px}
+  kbd{background:#fff;border:1px solid #cfc7ba;border-bottom-width:2px;border-radius:5px;
+    padding:1px 6px;font-size:12.5px;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>悉昙 IAST 输入法 · iPhone 安装说明</h1>
+  <div class="sub">键盘包 <code>Siddham-IAST-手机键盘.kmp</code>（v1.6，已修标签：消元音号键显示为
+    <code>-</code>）· 手机上大约 6 步</div>
+
+  <div class="card">
+    <h2>先说结论</h2>
+    <p><b>Mac 上那个键盘不能直接搬到 iPhone。</b>iPhone 没有 macOS 那套 <code>.keylayout</code> 机制，
+      自定义输入法只能靠第三方键盘 App。所以我按 Mac 上那套键位，重新做了一个
+      <b>Keyman 键盘包</b>——Keyman 正是你 Mac 上已经在用的那个框架。</p>
+    <table>
+      <tr><th>层</th><th>内容</th><th>与 Mac 版关系</th></tr>
+      <tr><td>默认层</td><td>基本字母：<code>k</code>→<span class="sd">𑖎</span>、<code>a</code>→<span class="sd">𑖀</span></td>
+          <td>与 Mac v1.5 <b>逐键一致</b></td></tr>
+      <tr><td><kbd>⇧</kbd> 层</td><td>送气音与长音：<code>⇧k</code>→<span class="sd">𑖏</span> kha、<code>⇧a</code>→<span class="sd">𑖁</span> ā</td>
+          <td>与 Mac v1.5 <b>逐键一致</b></td></tr>
+      <tr><td><kbd>◌</kbd> 附标层 <span class="tag">新增</span></td>
+          <td>元音符号（贴在辅音上）：<span class="sd">◌𑖯 ◌𑖰 ◌𑖲 ◌𑖸</span> …
+              <br>例：<code>k</code> + <span class="sd">◌𑖯</span> → <span class="sd">𑖎𑖯</span> kā</td>
+          <td>Mac v1.5 <b>缺这一层</b>（11 个符号全缺），这里补齐</td></tr>
+      <tr><td>符号层</td><td>数字、章节记号、变体字母</td>
+          <td>补齐后 <b>92 个悉昙字符全部可打</b></td></tr>
+    </table>
+    <p class="muted">连字用<b>消元音号</b> <code>-</code>：<code>k</code> <code>-</code> <code>⇧s</code> →
+      <span class="sd">𑖎𑖿𑖬</span> kṣa。
+      这个键的<b>标签就是 <code>-</code></b>，在默认层<b>第三行第 8 个</b>（<code>m</code> 往右两格）；
+      「附标层」第三行和「符号层」第二行也各放了一个，随手能按到。</p>
+    <p class="muted"><b>包怎么传到手机都行</b>：iCloud Drive、隔空投送、微信/邮件发给自己、数据线拷进
+      App 目录——文件是同一个，装出来的键盘也一样。唯一的差别只是「手机能不能找到这个文件」。</p>
+  </div>
+
+  <div class="card">
+    <h2>悉昙字显示成方框？<span class="tag warn">最常见</span></h2>
+    <p><b>原因</b>：iPhone 自带没有悉昙字体（这个文种太冷门）。键盘包里的字体必须单独装成
+      「<b>字体描述文件</b>」才能全机可用。</p>
+    <p>有个现象容易让人误判：<b>在 Keyman App 自己里面看，字体是正常的</b>（App 内嵌了字体），
+      但一旦把字打进备忘录、微信、Safari，就全变方框——因为那些 App 用的是系统字体。
+      所以：<b>只要在别的 App 里是方框，就说明描述文件没装。</b></p>
+    <h3>怎么补装</h3>
+    <ol>
+      <li>打开 <b>Keyman</b> → 重新走一次安装这个包（右上角 <b>⋯</b> → Settings →
+        <b>Install From File</b> → 选那个 .kmp → Install）。安装过程中会出现
+        「<b>Install</b>」（安装字体）的提示。</li>
+      <li>点它 → 会跳到 <b>设置</b> → 通用 → <b>VPN 与设备管理</b> →
+        「已下载的描述文件」里出现 <b>Noto Sans Siddham</b> → 点 <b>安装</b> →
+        输入锁屏密码 → 再点一次 <b>安装</b>（Consent 页）→ <b>完成</b>。</li>
+      <li>回到 Keyman（提示「现在返回 Keyman」就点它）。</li>
+    </ol>
+    <p><b>怎么确认装上了</b>：设置 → 通用 → VPN 与设备管理 → 能看到一个字体描述文件。</p>
+    <p class="muted">如果那一栏是空的、也没有任何描述文件，就说明当时跳过了这一步，重装一次包即可补上。</p>
+  </div>
+
+  <div class="card">
+    <h2>手机上要做的（按顺序）</h2>
+    <ol class="steps">
+      <li><b>装 Keyman</b>：App Store 搜 <b>Keyman</b>（SIL 出的，免费开源）。装完打开一次。</li>
+      <li><b>允许 Keyman 当系统键盘</b>：设置 → 通用 → 键盘 → 键盘 → <b>添加新键盘</b> →
+        在「第三方键盘」里选 <b>Keyman</b>。
+        <div class="muted">建议顺手把 Keyman 那一项里的「<b>允许完全访问</b>」打开（不打开也能用，但少些功能）。</div></li>
+      <li><b>拿到键盘包</b>：打开「<b>文件</b>」App → iCloud Drive →
+        <code>Siddham-IAST-手机键盘.kmp</code>。点它一下，选「用 <b>Keyman</b> 打开」。
+        <div class="muted">如果没弹出「用 Keyman 打开」，就打开 Keyman → 右上角 <b>⋯</b> → <b>Settings</b> →
+          <b>Install From File</b> → 浏览到那个 .kmp。</div></li>
+      <li><b>点 Install</b> 确认安装。</li>
+      <li><b>允许安装字体</b> <span class="tag warn">关键·最容易漏</span>：安装过程中会出现
+        「<b>Install</b>」（装字体）的提示。<b>务必点</b>——iPhone 本身没有悉昙字体，不装的话
+        打进别的 App 全是方框（在 Keyman App 里却看不出来，容易误判成"装好了"）。
+        点了之后会跳到：设置 → 通用 → VPN 与设备管理 → 已下载的描述文件 →
+        <b>Noto Sans Siddham</b> → 安装 → 输密码 → 再点安装 → 完成 → 返回 Keyman。
+        <br><span class="muted">漏了不要紧，重装一次包就能补（见上一节）。</span></li>
+      <li><b>开始打字</b>：任意输入框，点键盘左下角<b>地球键</b> → 选 <b>Keyman</b> →
+        顶部若显示别的键盘，再点一次切换成 <b>Siddham IAST</b>。</li>
+    </ol>
+    <div class="okbox"><b>自检</b>：切到 Siddham IAST 后依次按 <code>k</code> <code>⇧t</code>
+      <code>k</code> <code>-</code> <code>⇧s</code>，应该出
+      <span class="sd">𑖎𑖘𑖎𑖿𑖬</span>。
+      <br><b>就算显示成方框也能验证</b>：把那串字<b>选中复制</b>，发到聊天里／发给我——
+      复制出来的是真正的 Unicode 字符，跟字体无关。我一看码位就知道键盘对不对。</div>
+  </div>
+
+  <div class="card">
+    <h2>键盘怎么用</h2>
+    <p>底部一排按键（从左到右）：<b>符号</b>（切到数字/标点层）、<b>菜单</b>（地球，切输入法）、
+      <b>⇧</b>（切到送气/长音层）、空格、<b>◌</b>（切到元音附标层）、回车。
+      输入框右侧的 <b>⌫</b> 是退格。</p>
+    <p>按 <b>◌</b> 之后点某个附标键，就会把符号贴到刚打的那个辅音上——写 <span class="sd">𑖎𑖯</span>（kā）就是
+      <code>k</code> 然后 <span class="sd">◌𑖯</span>。</p>
+    <p><b>连字（消元音号 <code>-</code>）</b>：默认层第三行第 8 键，标签 <code>-</code>；
+      附标层第三行、符号层第二行也有。打在两个辅音之间就成了叠字，例如
+      <code>k</code> <code>-</code> <code>⇧s</code> → <span class="sd">𑖎𑖿𑖬</span>。</p>
+    <p class="muted">符号层里的键直接显示字形（如 <span class="sd">𑗆 𑗈 𑗊</span>），它们是章节记号、
+      重复记号、变体字母——平时用不到，需要时去那一层找。</p>
+  </div>
+
+  <div class="card">
+    <h2>送气音（kh gh ch jh th dh ph bh）怎么打</h2>
+    <p><b>长按对应字母键</b>，会弹出送气版本，滑动选它就行（和 iOS 自带键盘长按出 é 是一样的操作）。</p>
+    <table>
+      <tr><th>长按</th><th>可选</th><th>长按</th><th>可选</th></tr>
+      <tr><td><code>k</code></td><td><b>kh</b> 𑖏</td><td><code>g</code></td><td><b>gh</b> 𑖑</td></tr>
+      <tr><td><code>c</code></td><td><b>ch</b> 𑖔</td><td><code>j</code></td><td><b>jh</b> 𑖖</td></tr>
+      <tr><td><code>t</code></td><td><b>th</b> 𑖞 / <b>ṭh</b> 𑖙</td><td><code>d</code></td><td><b>dh</b> 𑖠 / <b>ḍh</b> 𑖛</td></tr>
+      <tr><td><code>p</code></td><td><b>ph</b> 𑖣</td><td><code>b</code></td><td><b>bh</b> 𑖥</td></tr>
+      <tr><td><code>n</code></td><td><b>ñ</b> 𑖗 / <b>ṅ</b> 𑖒</td><td><code>s</code></td><td><b>ṣ</b> 𑖬 / <b>ś</b> 𑖫</td></tr>
+    </table>
+    <p class="note">例：<code>buddhakṣetre</code>（佛土）＝ <code>b</code> → 点 ◌ 进附标层打 <code>u</code> → <code>d</code> → <code>-</code> → 长按 <code>d</code> 选 dh → 回字母层 <code>k</code> → 长按 <code>s</code> 选 ṣ → 附标层 <code>e</code> → <code>t</code> → <code>-</code> → <code>r</code> → 附标层 <code>e</code></p>
+    <p class="note">符号层里也有 th / dh / ṭh / ḍh 的独立键（第 3–4 行），但那层是给低频字符用的，日常还是长按快。</p>
+
+    <h2>怎么撤销 / 换回</h2>
+    <ul>
+      <li><b>停用</b>：设置 → 通用 → 键盘 → 键盘 → 左滑 Keyman → 删除。默认键盘不受影响。</li>
+      <li><b>删掉键盘包</b>：在 Keyman 里 Settings → Installed Languages → 删掉 Sanskrit (Siddham)。</li>
+      <li><b>删字体</b>：设置 → 通用 → VPN与设备管理 → 删除那个字体描述文件。</li>
+      <li>删掉 App 即完全还原，不会动系统里任何东西。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>症状对照表</h2>
+    <table>
+      <tr><th>现象</th><th>原因</th><th>怎么修</th></tr>
+      <tr><td>能打出字，但显示成 <b>方框</b></td>
+          <td>字体描述文件没装</td>
+          <td>装字体（见上一节）</td></tr>
+      <tr><td>地球键菜单里<b>找不到 Keyman</b></td>
+          <td>没把 Keyman 加进系统键盘</td>
+          <td>设置 → 通用 → 键盘 → 键盘 → 添加新键盘 → Keyman</td></tr>
+      <tr><td>Keyman 里键盘列表<b>没有 Siddham IAST</b></td>
+          <td>包没装上</td>
+          <td>Keyman → ⋯ → Settings → Install From File → 再选一次那个 .kmp</td></tr>
+      <tr><td>按 <code>k</code> 出来的是拉丁字母 <b>k</b>（不是悉昙字）</td>
+          <td>选中的是别的键盘（Keyman 里可能停在内置键盘上）</td>
+          <td>Keyman 键盘顶栏点一下，切到 <b>Siddham IAST</b></td></tr>
+      <tr><td>部分键是字、部分键是方框</td>
+          <td>同上，字体问题（拉丁标签正常、悉昙标签变方框）</td>
+          <td>装字体</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>我没法替你验的部分（如实说）</h2>
+    <ul>
+      <li><b>真机行为没测过</b>：我在这台 Mac 上做到了——包结构、92 字符全覆盖、
+        默认/⇧ 两层与 Mac 版逐键一致、字体已打进包、JS 语法通过。
+        但「iPhone 上装完能不能正常切键盘、字体描述文件是否顺利装上」我这边测不了，只能你试。</li>
+      <li>如果第 3 步找不到那个 .kmp，说明 iCloud 还没同步到手机（等一会儿，或到「文件」里手动刷新）。</li>
+      <li>如果想在 Mac 上也换成这一版（v1.6，比 v1.5 多了附标层和 20 个字符），
+        把这个 .kmp 拿到 Mac 上双击即可，会覆盖升级同名键盘。</li>
+    </ul>
+  </div>
+
+  <p class="muted" style="margin-top:24px">
+    键盘包工程（可重新编译）：<code>siddham-mac/kg-siddham-iast/</code> ·
+    生成器：<code>siddham-mac/gen_keyman_pkg.py</code></p>
+
+</div>
+</body>
+</html>

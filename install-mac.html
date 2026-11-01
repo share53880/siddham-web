@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>悉昙 IAST 输入法 · 操作说明（Mac）</title><style>
+:root{--bg:#fbf9f5;--fg:#26221e;--muted:#8a8175;--line:#e8e2d6;--accent:#8a6f4a;--card:#fff}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Apple Symbols","Helvetica Neue",sans-serif;
+  font-size:15px;line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:860px;margin:0 auto;padding:34px 26px 80px;overflow-x:hidden}
+h1{font-size:clamp(18px,4.6vw,26px);margin:0 0 6px;letter-spacing:.3px;line-height:1.35;word-break:break-word}
+.sub{font-size:13.5px;color:var(--muted);margin:0 0 26px}
+h2{font-size:19px;margin:44px 0 10px;padding-top:16px;border-top:2px solid var(--line)}
+h2 .n{display:inline-block;background:var(--accent);color:#fff;font-size:12px;border-radius:4px;
+  padding:1px 7px;margin-right:8px;vertical-align:2px;font-weight:600}
+h3{font-size:15.5px;margin:22px 0 8px;color:#4a4238}
+p{margin:8px 0}
+code{font-family:Menlo,"PingFang SC","Apple Symbols",monospace;font-size:13px;background:#f0ebe1;padding:1.5px 5px;border-radius:4px}
+.sd{font-family:"Noto Sans Siddham",serif;font-size:26px;line-height:1.5}
+.sd.big{font-size:34px}
+table{border-collapse:collapse;width:100%;margin:0;font-size:13.5px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 16px;border:1px solid var(--line);border-radius:8px}
+.scroll table{min-width:540px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:#f3eee4;font-weight:600;font-size:12.5px;color:#5c5346}
+td.k{font-family:Menlo,monospace;font-size:12px;color:#5a5045;white-space:nowrap;line-height:1.6}
+.note{background:#f6f1e6;border-left:3px solid var(--accent);padding:10px 14px;margin:14px 0;font-size:13.5px;border-radius:0 6px 6px 0}
+.warn{background:#fbf0ec;border-left:3px solid #b5674a;padding:10px 14px;margin:14px 0;font-size:13.5px;border-radius:0 6px 6px 0}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin:10px 0}
+.ex .h{font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.ex .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.ex .row .sd{font-size:32px}
+.ex .keys{font-family:Menlo,monospace;font-size:12.5px;color:#6b6055}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:620px){.wrap{padding:20px 12px 60px}.two{grid-template-columns:1fr}
+  .scroll table{min-width:500px;font-size:11.5px}th,td{padding:5px 6px}
+  .sd{font-size:20px}td.k{font-size:10.5px}h2{font-size:16.5px}}
+footer{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+</style></head><body><div class="wrap">
+<h1>悉昙 IAST 输入法 · 操作说明（Mac）</h1>
+<p class="sub">macOS · Keyman v2.1 键盘 · 四层键位<br>字体：Noto Sans Siddham（随包安装）</p>
+<div class="card">
+<h3 style="margin-top:0">开始之前，记住两条</h3>
+<p><b>① 辅音自带 a。</b>按 <code>k</code> 出来的是 <span class="sd">𑖎</span> ka——已经带了 a，<b>不要再按 a</b>。想打 kā 才需要额外按。</p>
+<p><b>② 元音有两种形态。</b>词首用<b>独立形</b>（<span class="sd">𑖀</span> a），辅音后面用<b>附标</b>（<span class="sd">𑖯</span> 的 ā 记号）。选错了字就不成形。</p>
+</div>
+<h2><span class="n">1</span>键盘长什么样</h2>
+<p>四个键位层，靠 <code>⇧</code> 和 <code>⌥</code> 切换：</p>
+<div class="scroll"><table><tr><th>层</th><th>怎么进入</th><th>放什么</th></tr><tr><td>基本层</td><td>直接按</td><td>13 个独立元音 + 33 个辅音 + 常用标点</td></tr><tr><td>⇧ 层</td><td>Shift</td><td>长元音 ā ī ū、反舌 ṭ ḍ ṇ、卷舌 ṣ ś、鼻音 ṃ ḥ</td></tr><tr><td>⌥ 层</td><td>Option</td><td><b>11 个元音附标</b> + 10 个送气辅音 kh gh ch jh th dh ph bh</td></tr><tr><td>⌥⇧ 层</td><td>Option+Shift</td><td>附标的长音形式、ṭha ḍha ñ、章节记号</td></tr></table></div>
+<div class="warn"><b>Option 按右边那个。</b>Keyman 在 macOS 上，<b>右 Option</b> 才稳定走键盘规则；左 Option 有时会被系统当成"输入变音符号"截走。</div>
+<h2>⇧ 和 ⌥ 到底怎么分工</h2>
+<p>整套键位只有一条规律，别的都是它的重复：</p>
+<div class="scroll"><table><tr><th>修饰</th><th>作用</th><th>例子</th></tr><tr><td>不按</td><td><b>字母本身</b></td><td><code>k</code>→ka　<code>r</code>→ra　<code>a</code>→a</td></tr><tr><td><b>⇧</b></td><td>给字母<b>加 IAST 记号</b>：长音、下点</td><td><code>⇧a</code>→ā　<code>⇧t</code>→ṭa　<code>⇧n</code>→ṇa　<code>⇧s</code>→ṣa　<code>⇧r</code>→ṛ</td></tr><tr><td><b>⌥</b></td><td><b>换形态</b>：元音→附标；辅音→送气 +h</td><td><code>⌥i</code>→i 附标　<code>⌥k</code>→kha　<code>⌥t</code>→tha</td></tr><tr><td><b>⌥⇧</b></td><td>两者叠加：长附标 / 送气且反舌</td><td><code>⌥⇧i</code>→ī 附标　<code>⌥⇧t</code>→ṭha</td></tr></table></div>
+<p><b>同一条规律再按一次 = 长音。</b><code>⇧r</code> 是 ṛ，<code>⇧r</code> 再按一次就是 <b>ṝ</b>；<code>⇧l</code> 再按一次是 <b>ḹ</b>。附标同理：<code>⌥i</code> 连按两次、或 <code>⌥⇧i</code>，都出 ī 附标。</p>
+<div class="note"><b>所以 ṝ 不用记 Shift+v</b>（那是我早先排错的例外，已撤掉）：现在是 <code>⇧r ⇧r</code>。v 上只留一个极少用的备用位 <code>⌥⇧v</code>。</div>
+<h2>看不见键位？打开屏幕键盘</h2>
+<p>Keyman 自带一张<b>屏幕键盘</b>：每个键上直接印着它会打出的悉昙字。初学不用背，照着按就行。</p>
+<ol><li>菜单栏点 <b>Keyman 图标</b> → <b>On-Screen Keyboard</b>（屏幕键盘）。</li><li>按住 <code>⇧</code> 或 <code>⌥</code>，屏幕键盘会跟着切到那一层。</li><li>按物理键盘上的键，屏幕键盘会高亮对应的位置。</li></ol>
+<p class="note">这张图随包安装（<code>siddham_iast.kvk</code>）。如果打开是空白，说明装的是旧包，重新装一次 v2.1 即可。</p>
+<h2><span class="n">2</span>元音：词首用独立形</h2>
+<p>一个词或一个音节<b>单独开头</b>时，元音写成完整的字：</p>
+<div class="scroll"><table><tr><th>字</th><th>IAST</th><th>说明</th><th>按键</th></tr>
+<tr><td><span class="sd">𑖀</span></td><td><code>a</code></td><td>短 a</td><td class="k">a</td></tr>
+<tr><td><span class="sd">𑖁</span></td><td><code>ā</code></td><td>长 ā</td><td class="k">Shift+a</td></tr>
+<tr><td><span class="sd">𑖂</span></td><td><code>i</code></td><td>短 i</td><td class="k">i</td></tr>
+<tr><td><span class="sd">𑖃</span></td><td><code>ī</code></td><td>长 ī</td><td class="k">Shift+i</td></tr>
+<tr><td><span class="sd">𑖄</span></td><td><code>u</code></td><td>短 u</td><td class="k">u</td></tr>
+<tr><td><span class="sd">𑖅</span></td><td><code>ū</code></td><td>长 ū</td><td class="k">Shift+u</td></tr>
+<tr><td><span class="sd">𑖆</span></td><td><code>ṛ</code></td><td>卷舌 ṛ</td><td class="k">Shift+r</td></tr>
+<tr><td><span class="sd">𑖇</span></td><td><code>ṝ</code></td><td>长卷舌 ṝ</td><td class="k">Shift+r ×2</td></tr>
+<tr><td><span class="sd">𑖈</span></td><td><code>ḷ</code></td><td>卷舌 ḷ</td><td class="k">Shift+l</td></tr>
+<tr><td><span class="sd">𑖊</span></td><td><code>e</code></td><td>e</td><td class="k">e</td></tr>
+<tr><td><span class="sd">𑖋</span></td><td><code>ai</code></td><td>ai</td><td class="k">Shift+e</td></tr>
+<tr><td><span class="sd">𑖌</span></td><td><code>o</code></td><td>o</td><td class="k">o</td></tr>
+<tr><td><span class="sd">𑖍</span></td><td><code>au</code></td><td>au</td><td class="k">Shift+o</td></tr>
+</table></div>
+<h2><span class="n">3</span>元音附标：辅音后面用这个</h2>
+<p>元音跟在辅音后面时，<b>不能写独立形</b>，必须换成附标贴在辅音上：</p>
+<div class="scroll"><table><tr><th>附标</th><th>IAST</th><th>贴上去的样子</th><th>按键</th></tr>
+<tr><td><span class="sd">𑖯</span></td><td><code>ā</code></td><td><span class="sd">𑖎𑖯</span> <span style="color:#8a8175;font-size:12px">k𑖯</span></td><td class="k">Opt+a</td></tr>
+<tr><td><span class="sd">𑖰</span></td><td><code>i</code></td><td><span class="sd">𑖎𑖰</span> <span style="color:#8a8175;font-size:12px">k𑖰</span></td><td class="k">Opt+i</td></tr>
+<tr><td><span class="sd">𑖱</span></td><td><code>ī</code></td><td><span class="sd">𑖎𑖱</span> <span style="color:#8a8175;font-size:12px">k𑖱</span></td><td class="k">Opt+Shift+i</td></tr>
+<tr><td><span class="sd">𑖲</span></td><td><code>u</code></td><td><span class="sd">𑖎𑖲</span> <span style="color:#8a8175;font-size:12px">k𑖲</span></td><td class="k">Opt+u</td></tr>
+<tr><td><span class="sd">𑖳</span></td><td><code>ū</code></td><td><span class="sd">𑖎𑖳</span> <span style="color:#8a8175;font-size:12px">k𑖳</span></td><td class="k">Opt+Shift+u</td></tr>
+<tr><td><span class="sd">𑖴</span></td><td><code>ṛ</code></td><td><span class="sd">𑖎𑖴</span> <span style="color:#8a8175;font-size:12px">k𑖴</span></td><td class="k">Opt+r</td></tr>
+<tr><td><span class="sd">𑖵</span></td><td><code>ṝ</code></td><td><span class="sd">𑖎𑖵</span> <span style="color:#8a8175;font-size:12px">k𑖵</span></td><td class="k">Opt+Shift+r</td></tr>
+<tr><td><span class="sd">𑖸</span></td><td><code>e</code></td><td><span class="sd">𑖎𑖸</span> <span style="color:#8a8175;font-size:12px">k𑖸</span></td><td class="k">Opt+e</td></tr>
+<tr><td><span class="sd">𑖹</span></td><td><code>ai</code></td><td><span class="sd">𑖎𑖹</span> <span style="color:#8a8175;font-size:12px">k𑖹</span></td><td class="k">Opt+Shift+e</td></tr>
+<tr><td><span class="sd">𑖺</span></td><td><code>o</code></td><td><span class="sd">𑖎𑖺</span> <span style="color:#8a8175;font-size:12px">k𑖺</span></td><td class="k">Opt+o</td></tr>
+<tr><td><span class="sd">𑖻</span></td><td><code>au</code></td><td><span class="sd">𑖎𑖻</span> <span style="color:#8a8175;font-size:12px">k𑖻</span></td><td class="k">Opt+Shift+o</td></tr>
+</table></div>
+<div class="note"><b>短 a 没有附标</b>——辅音本身就带 a（<span class="sd">𑖎</span> = ka）。所以上表里没有 a，这是正常的。</div>
+<h3>对比：同一个 k，接不同元音</h3>
+<div class="two">
+<div class="ex"><div class="h">k + ā</div><div class="row"><span class="sd">𑖎𑖯</span> <span class="keys">Opt+a</span></div></div>
+<div class="ex"><div class="h">k + i</div><div class="row"><span class="sd">𑖎𑖰</span> <span class="keys">Opt+i</span></div></div>
+<div class="ex"><div class="h">k + ī</div><div class="row"><span class="sd">𑖎𑖱</span> <span class="keys">Opt+Shift+i</span></div></div>
+<div class="ex"><div class="h">k + u</div><div class="row"><span class="sd">𑖎𑖲</span> <span class="keys">Opt+u</span></div></div>
+<div class="ex"><div class="h">k + ū</div><div class="row"><span class="sd">𑖎𑖳</span> <span class="keys">Opt+Shift+u</span></div></div>
+<div class="ex"><div class="h">k + ṛ</div><div class="row"><span class="sd">𑖎𑖴</span> <span class="keys">Opt+r</span></div></div>
+</div>
+<h2><span class="n">4</span>辅音：33 个</h2>
+<p>每个辅音都自带 a（<span class="sd">𑖎</span> = ka，不是 k）。要打不带元音的 k，得用消元音号 <code>-</code>。</p>
+<div class="scroll"><table><tr><th>字</th><th>IAST</th><th>按键</th><th>字</th><th>IAST</th><th>按键</th></tr>
+<tr><td><span class="sd">𑖎</span></td><td><code>ka</code></td><td class="k">k</td><td><span class="sd">𑖟</span></td><td><code>da</code></td><td class="k">d</td></tr>
+<tr><td><span class="sd">𑖏</span></td><td><code>kha</code></td><td class="k">Opt+k</td><td><span class="sd">𑖠</span></td><td><code>dha</code></td><td class="k">Opt+d</td></tr>
+<tr><td><span class="sd">𑖐</span></td><td><code>ga</code></td><td class="k">g</td><td><span class="sd">𑖡</span></td><td><code>na</code></td><td class="k">n</td></tr>
+<tr><td><span class="sd">𑖑</span></td><td><code>gha</code></td><td class="k">Opt+g</td><td><span class="sd">𑖢</span></td><td><code>pa</code></td><td class="k">p</td></tr>
+<tr><td><span class="sd">𑖒</span></td><td><code>ṅa</code></td><td class="k">Opt+n</td><td><span class="sd">𑖣</span></td><td><code>pha</code></td><td class="k">Opt+p</td></tr>
+<tr><td><span class="sd">𑖓</span></td><td><code>ca</code></td><td class="k">c</td><td><span class="sd">𑖤</span></td><td><code>ba</code></td><td class="k">b</td></tr>
+<tr><td><span class="sd">𑖔</span></td><td><code>cha</code></td><td class="k">Opt+c</td><td><span class="sd">𑖥</span></td><td><code>bha</code></td><td class="k">Opt+b</td></tr>
+<tr><td><span class="sd">𑖕</span></td><td><code>ja</code></td><td class="k">j</td><td><span class="sd">𑖦</span></td><td><code>ma</code></td><td class="k">m</td></tr>
+<tr><td><span class="sd">𑖖</span></td><td><code>jha</code></td><td class="k">Opt+j</td><td><span class="sd">𑖧</span></td><td><code>ya</code></td><td class="k">y</td></tr>
+<tr><td><span class="sd">𑖗</span></td><td><code>ña</code></td><td class="k">Opt+Shift+n</td><td><span class="sd">𑖨</span></td><td><code>ra</code></td><td class="k">r</td></tr>
+<tr><td><span class="sd">𑖘</span></td><td><code>ṭa</code></td><td class="k">Shift+t</td><td><span class="sd">𑖩</span></td><td><code>la</code></td><td class="k">l</td></tr>
+<tr><td><span class="sd">𑖙</span></td><td><code>ṭha</code></td><td class="k">Opt+Shift+t</td><td><span class="sd">𑖪</span></td><td><code>va</code></td><td class="k">v</td></tr>
+<tr><td><span class="sd">𑖚</span></td><td><code>ḍa</code></td><td class="k">Shift+d</td><td><span class="sd">𑖫</span></td><td><code>śa</code></td><td class="k">Opt+s</td></tr>
+<tr><td><span class="sd">𑖛</span></td><td><code>ḍha</code></td><td class="k">Opt+Shift+d</td><td><span class="sd">𑖬</span></td><td><code>ṣa</code></td><td class="k">Shift+s</td></tr>
+<tr><td><span class="sd">𑖜</span></td><td><code>ṇa</code></td><td class="k">Shift+n</td><td><span class="sd">𑖭</span></td><td><code>sa</code></td><td class="k">s</td></tr>
+<tr><td><span class="sd">𑖝</span></td><td><code>ta</code></td><td class="k">t</td><td><span class="sd">𑖮</span></td><td><code>ha</code></td><td class="k">h</td></tr>
+<tr><td><span class="sd">𑖞</span></td><td><code>tha</code></td><td class="k">Opt+t</td><td></td><td></td><td></td></tr>
+</table></div>
+<h2><span class="n">5</span>连字：辅音叠辅音</h2>
+<p>两个辅音之间没有元音时，前一个辅音要<b>消掉自带的 a</b>，用消元音号 <code>-</code>（悉昙字 <span class="sd">𑖿</span>）：</p>
+<div class="ex"><div class="h">k + virama + ṣ = kṣ</div><div class="row"><span class="sd">𑖎𑖿𑖬</span> <span class="keys">k -</span></div></div>
+<div class="note"><b>规则很简单：每多一层辅音，就多按一次 <code>-</code>。</b>三层叠字按两次，五层叠按四次。</div>
+<h2><span class="n">6</span>鼻音、气音、消元音号</h2>
+<div class="scroll"><table><tr><th>符号</th><th>IAST</th><th>作用</th><th>样例</th><th>按键</th></tr>
+<tr><td><span class="sd">𑖽</span></td><td><code>ṃ</code></td><td>随韵 anusvāra</td><td><span class="sd">𑖎𑖽</span></td><td class="k">Shift+m</td></tr>
+<tr><td><span class="sd">𑖾</span></td><td><code>ḥ</code></td><td>止韵 visarga</td><td><span class="sd">𑖎𑖾</span></td><td class="k">Shift+h</td></tr>
+<tr><td><span class="sd">𑖼</span></td><td><code>m̐</code></td><td>空点 candrabindu</td><td><span class="sd">𑖎𑖼</span></td><td class="k">Opt+m</td></tr>
+<tr><td><span class="sd">𑖿</span></td><td><code>-</code></td><td>消元音号 virama</td><td><span class="sd">𑖎𑖿</span></td><td class="k">-</td></tr>
+</table></div>
+<div class="warn"><b>三个"鼻音"别混：</b><br><code>ṃ</code> 随韵（一个点，咒尾最多，如 oṃ）　<code>ḥ</code> 止韵（两点，如 namaḥ）　<code>m̐</code> 空点（一个圈，多用于种子字）</div>
+<h2><span class="n">7</span>复杂字：三叠、四叠、五叠</h2>
+<p>梵文里辅音可以连续堆叠，堆得越多越难打——<b>难点在于每层之间都要插消元音号</b>，而且顺序必须跟发音一致。</p>
+<div class="ex"><div class="h">buddha · 佛 · dd 双叠 · 2 层叠</div><div class="row"><span class="sd">𑖤𑖲𑖟𑖿𑖠</span> <span class="keys">b Opt+u d - Opt+d</span></div></div>
+<div class="ex"><div class="h">kṣetra · 国土 · kṣ 叠 · 3 层叠</div><div class="row"><span class="sd">𑖎𑖿𑖬𑖸𑖝𑖿𑖨</span> <span class="keys">k - Shift+s Opt+e t - r</span></div></div>
+<div class="ex"><div class="h">tattva · 真理 · tt 双叠 · 3 层叠</div><div class="row"><span class="sd">𑖝𑖝𑖿𑖝𑖿𑖪</span> <span class="keys">t t - t - v</span></div></div>
+<div class="ex"><div class="h">strī · 女人 · 三叠 s-t-r · 3 层叠</div><div class="row"><span class="sd">𑖭𑖿𑖝𑖿𑖨𑖱</span> <span class="keys">s - t - r Opt+Shift+i</span></div></div>
+<div class="ex"><div class="h">rāṣṭra · 国 · 三叠 ṣ-ṭ-r · 3 层叠</div><div class="row"><span class="sd">𑖨𑖯𑖬𑖿𑖘𑖿𑖨</span> <span class="keys">r Opt+a Shift+s - Shift+t - r</span></div></div>
+<div class="ex"><div class="h">kṣatriya · 刹帝利 · kṣ + tr · 3 层叠</div><div class="row"><span class="sd">𑖎𑖿𑖬𑖝𑖿𑖨𑖰𑖧</span> <span class="keys">k - Shift+s t - r Opt+i y</span></div></div>
+<div class="ex"><div class="h">kārtsnya · 一切 · 五叠 r-t-s-n-y · 5 层叠</div><div class="row"><span class="sd">𑖎𑖯𑖨𑖿𑖝𑖿𑖭𑖿𑖡𑖿𑖧</span> <span class="keys">k Opt+a r - t - s - n - y</span></div></div>
+<div class="ex"><div class="h">buddhakṣetre · 佛土 · 一个词三处连字 · 4 层叠</div><div class="row"><span class="sd">𑖤𑖲𑖟𑖿𑖠𑖎𑖿𑖬𑖸𑖝𑖿𑖨𑖸</span> <span class="keys">b Opt+u d - Opt+d k - Shift+s Opt+e t - r Opt+e</span></div></div>
+<h2><span class="n">8</span>纵向叠加：种子字</h2>
+<p>密教的"种子字"是横向叠 + 纵向叠的组合：底下一个辅音，顶上一个钩（r 变形），右边挂附标，上面再加点。</p>
+<div class="ex"><div class="h">trāṃ · 种子字 · 钩 + 长 ā + 鼻音点</div><div class="row"><span class="sd">𑖝𑖿𑖨𑖯𑖽</span> <span class="keys">t - r Opt+a Shift+m</span></div></div>
+<div class="ex"><div class="h">hrīḥ · 观音种子字 · 钩 + 长 ī + 止韵</div><div class="row"><span class="sd">𑖮𑖿𑖨𑖱𑖾</span> <span class="keys">h - r Opt+Shift+i Shift+h</span></div></div>
+<div class="ex"><div class="h">hūṃ · 吽 · 长 ū + 鼻音点</div><div class="row"><span class="sd">𑖮𑖳𑖽</span> <span class="keys">h Opt+Shift+u Shift+m</span></div></div>
+<div class="ex"><div class="h">bhrūṃ · 佛顶种子字 · 钩 + 长 ū + 鼻音点</div><div class="row"><span class="sd">𑖥𑖿𑖨𑖳𑖽</span> <span class="keys">Opt+b - r Opt+Shift+u Shift+m</span></div></div>
+<h2><span class="n">9</span>常见咒语示范</h2>
+<div class="ex"><div class="h">唵 · 一切咒的开头</div><div class="row"><span class="sd">𑖌𑖽</span></div><div class="keys" style="margin-top:6px">o Shift+m</div></div>
+<div class="ex"><div class="h">六字大明咒</div><div class="row"><span class="sd">𑖌𑖽 𑖦𑖜𑖰 𑖢𑖟𑖿𑖦𑖸 𑖮𑖳𑖽</span></div><div class="keys" style="margin-top:6px">o Shift+m [空格] m Shift+n Opt+i [空格] p d - m Opt+e [空格] h Opt+Shift+u Shift+m</div></div>
+<div class="ex"><div class="h">《心经》末咒</div><div class="row"><span class="sd">𑖐𑖝𑖸 𑖐𑖝𑖸 𑖢𑖯𑖨𑖐𑖝𑖸 𑖢𑖯𑖨𑖭𑖽𑖐𑖝𑖸 𑖤𑖺𑖠𑖰 𑖭𑖿𑖪𑖯𑖮𑖯</span></div><div class="keys" style="margin-top:6px">g t Opt+e [空格] g t Opt+e [空格] p Opt+a r g t Opt+e [空格] p Opt+a r s Shift+m g t Opt+e [空格] b Opt+o Opt+d Opt+i [空格] s - v Opt+a h Opt+a</div></div>
+<div class="ex"><div class="h">《大悲咒》首句</div><div class="row"><span class="sd">𑖡𑖦𑖾 𑖭𑖦𑖡𑖿𑖝𑖪𑖕𑖿𑖨𑖯𑖜𑖯𑖽</span></div><div class="keys" style="margin-top:6px">n m Shift+h [空格] s m n - t v j - r Opt+a Shift+n Opt+a Shift+m</div></div>
+<div class="ex"><div class="h">三皈依</div><div class="row"><span class="sd">𑖤𑖲𑖟𑖿𑖠𑖽 𑖫𑖨𑖜𑖽 𑖐𑖓𑖿𑖔𑖯𑖦𑖰</span></div><div class="keys" style="margin-top:6px">b Opt+u d - Opt+d Shift+m [空格] Opt+s r Shift+n Shift+m [空格] g c - Opt+c Opt+a m Opt+i</div></div>
+<div class="ex"><div class="h">三字根本咒</div><div class="row"><span class="sd">𑖌𑖽 𑖁𑖾 𑖮𑖳𑖽</span></div><div class="keys" style="margin-top:6px">o Shift+m [空格] Shift+a Shift+h [空格] h Opt+Shift+u Shift+m</div></div>
+<h2><span class="n">10</span>标点</h2>
+<div class="scroll"><table><tr><th>符号</th><th>名称</th><th>用法</th><th>按键</th></tr>
+<tr><td><span class="sd">𑗂</span></td><td>danda 句号</td><td>一句结束</td><td class="k">.</td></tr>
+<tr><td><span class="sd">𑗃</span></td><td>双 danda</td><td>一段结束</td><td class="k">Shift+.</td></tr>
+<tr><td><span class="sd">𑗁</span></td><td>siddham 起首符</td><td>写经开头</td><td class="k">[</td></tr>
+<tr><td><span class="sd">𑗄</span></td><td>点状分隔</td><td>咒语单词间</td><td class="k">Opt+,</td></tr>
+</table></div>
+<h2><span class="n">11</span>打错了怎么查</h2>
+<div class="scroll"><table><tr><th>你看到的</th><th>原因</th><th>改法</th></tr><tr><td>两个字母分开躺着，没叠起来</td><td>漏了消元音号</td><td>两个辅音之间补一个 <code>-</code></td></tr><tr><td>元音跑到独立位置，没贴上去</td><td>用了独立形而不是附标</td><td>换成附标：<span class="sd">𑖯</span> 这类，在 ⌥ 层 / ◌ 层</td></tr><tr><td>多出一个 a</td><td>辅音后多按了 a</td><td>辅音自带 a，别补</td></tr><tr><td>显示成方块</td><td>字体没装</td><td>装 Noto Sans Siddham</td></tr><tr><td>该长的元音没长</td><td>用错层</td><td>长音在 ⇧ 层 / ⌥⇧ 层</td></tr></table></div>
+<h2><span class="n">12</span>一页速查</h2>
+<div class="card">
+<p><b>四层</b>：直接按 = 基本　<code>⇧</code> = 长音/反舌　<code>⌥</code> = 附标/送气　<code>⌥⇧</code> = 两者叠加</p>
+<p><b>三条铁律</b>：辅音自带 a ｜ 元音词首独立、辅音后附标 ｜ 连字每个接缝按一次 <code>-</code></p>
+<p><b>三个鼻音</b>：<code>ṃ</code> 一点 ｜ <code>ḥ</code> 两点 ｜ <code>m̐</code> 一圈</p>
+</div>
