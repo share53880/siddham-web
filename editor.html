@@ -35,6 +35,14 @@ body{
 .badge.ok{background:#e8f1e8;color:#3f6b46}
 .badge.bad{background:#fbe9e4;color:#a94d34}
 .spacer{flex:1}
+
+/* 小屏顶栏：徽章太占地方，藏掉，按钮收紧，保证一行放得下 */
+@media (max-width:560px){
+  .bar{gap:4px;padding:8px 9px}
+  .bar h1{font-size:12.5px}
+  .bar .badge{display:none}
+  .bar button{padding:6px 8px;font-size:11.5px}
+}
 button{
   font:inherit;font-size:12px;padding:6px 9px;border-radius:8px;cursor:pointer;
   border:1px solid var(--line);background:#fff;color:#4d4438;white-space:nowrap;
@@ -56,7 +64,7 @@ button.ghost{background:transparent}
 }
 #paper:empty:before{
   content:attr(data-ph);color:#c3b8a6;font-family:-apple-system,"PingFang SC",sans-serif;
-  font-size:14px;line-height:1.8;
+  font-size:13.5px;line-height:1.85;white-space:pre-wrap;display:block;
 }
 
 .row{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
@@ -65,20 +73,43 @@ button.ghost{background:transparent}
   border:1px solid var(--line);border-radius:10px;background:#fff;outline:none;
 }
 #iast:focus{border-color:#c9b591}
+
+/* 变音字母条：手机自带键盘打不出 ā ī ṭ ṃ，点一下插到光标处 */
+.acc{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.acc button{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:15px;line-height:1;
+  padding:0;width:29px;height:29px;border-radius:8px;background:#fdfbf7;color:#4a4238;
+}
+.acc button:active{background:var(--soft)}
+.acc button.shift{font-family:inherit;font-size:11px;width:auto;padding:0 8px;margin-left:auto;color:var(--muted)}
+.acc button.shift.on{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (min-width:600px){ .acc button.shift{margin-left:0} }
+
+/* 输入框实时预览：点完变音字母马上能看到悉昙结果 */
+#pv{font-family:"SiddhamEmbed",sans-serif;font-size:26px;line-height:1.6;color:#3a3128;margin-top:8px}
+#pv:empty{display:none}
+
 .hint{font-size:11.5px;color:var(--muted);line-height:1.7}
 .hint a{color:#8a6f4a;text-decoration:none;border-bottom:1px solid #d8c8ae}
 .hint code{font-family:Menlo,"PingFang SC",monospace;background:#f0e9dd;padding:1px 4px;border-radius:4px}
 
 .pal{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
-.pal summary{padding:10px 13px;font-size:13px;cursor:pointer;color:#5c5142;list-style:none}
+.pal summary{padding:10px 13px;font-size:13px;line-height:1.65;cursor:pointer;color:#5c5142;
+  list-style:none;display:block}
+.pal summary::marker{content:""}
 .pal summary::-webkit-details-marker{display:none}
 .pal .body{padding:4px 10px 12px;border-top:1px solid var(--line)}
 .pal h4{font-size:11.5px;color:var(--muted);margin:10px 0 6px;font-weight:600}
 .chars{display:flex;flex-wrap:wrap;gap:4px}
 .chars button{
-  font-family:"SiddhamEmbed";font-size:23px;line-height:1.1;padding:6px 8px;min-width:40px;
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  font-family:"SiddhamEmbed";font-size:21px;line-height:1.15;padding:5px 7px;min-width:44px;
   border-radius:7px;background:#fdfbf7;
 }
+.chars button .g{font-family:"SiddhamEmbed",sans-serif;font-size:21px;line-height:1.15}
+.chars button .l{font-family:-apple-system,"PingFang SC",sans-serif;font-size:9.5px;
+  line-height:1;color:#9b8f7c;letter-spacing:.2px}
 
 #shot{position:fixed;inset:0;background:rgba(20,16,12,.86);z-index:60;display:none;
   padding:16px;overflow:auto}
@@ -91,7 +122,7 @@ button.ghost{background:transparent}
 footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:var(--muted);line-height:1.9}
 
 @media print{
-  .bar,.pal,.row,.hint,footer,#shot{display:none !important}
+  .bar,.pal,.row,.acc,#pv,.hint,footer,#shot{display:none !important}
   body{background:#fff}
   .wrap{max-width:none;padding:0}
   #paper{border:0;box-shadow:none;padding:0;font-size:20pt;line-height:1.9;min-height:0}
@@ -115,12 +146,14 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 
 <div class="wrap">
   <div id="paper" contenteditable="true" spellcheck="false"
-       data-ph="在这里写字。&#10;· 装了悉昙键盘就直接打；&#10;· 没装键盘，用下面那行打罗马字（oṃ maṇi padme hūṃ），空格或回车转成悉昙。"></div>
+       data-ph="在这里写字。&#10;· 装了悉昙键盘就直接打；&#10;· 没装键盘，用下面那行打罗马字，空格就变悉昙（例：oṃ maṇi padme hūṃ）。"></div>
 
   <div class="row">
     <input id="iast" placeholder="罗马字转写：oṃ maṇi padme hūṃ" autocomplete="off" autocapitalize="off" autocorrect="off">
     <button id="ins">转成悉昙</button>
   </div>
+  <div class="acc" id="acc"></div>
+  <div id="pv"></div>
   <p class="hint">
     这一页<b>自带字体</b>（约 82 KB 嵌在文件里），所以在没有悉昙字体的安卓手机上也能正常显示、正常导出。<br>
     字号：<code>A− / A+</code>　导出：<code>存图片</code>（PNG，可长按保存）· <code>存 PDF</code>（打印对话框里选「另存为 PDF」）<br>
@@ -134,7 +167,7 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
   </p>
 
   <details class="pal">
-    <summary>字符表（点一下插到光标处）</summary>
+    <summary>字符表（按发音找字；辅音后点元音自动变附标）</summary>
     <div class="body" id="pal"></div>
   </details>
 </div>
@@ -336,7 +369,11 @@ function insertText(txt){
   paper.focus();
   var sel = window.getSelection();
   if (!sel.rangeCount || !paper.contains(sel.anchorNode)) {
-    paper.appendChild(document.createTextNode(txt));
+    var n0 = document.createTextNode(txt);
+    paper.appendChild(n0);
+    var r0 = document.createRange();
+    r0.setStartAfter(n0); r0.collapse(true);
+    sel.removeAllRanges(); sel.addRange(r0);   // 光标跟着走，下次点击才知道插在哪
     return;
   }
   var r = sel.getRangeAt(0);
@@ -354,12 +391,61 @@ function convertAndInsert(space){
   var out = iastToSiddham(raw);
   insertText(out + (space ? " " : ""));
   box.value = "";
+  if (pvEl) pvEl.textContent = "";
 }
 $("#ins").onclick = function(){ convertAndInsert(true); };
 $("#iast").addEventListener("keydown", function(e){
   if (e.key === " ") { e.preventDefault(); convertAndInsert(true); }
   else if (e.key === "Enter") { e.preventDefault(); convertAndInsert(false); }
 });
+
+/* ---------- 变音字母条（手机键盘打不出 ā ī ṭ ṃ）+ 实时预览 ---------- */
+var iastEl = $("#iast"), pvEl = $("#pv");
+function updatePv(){ pvEl.textContent = iastEl.value.trim() ? iastToSiddham(iastEl.value) : ""; }
+iastEl.addEventListener("input", updatePv);
+
+function accInsert(ch){
+  var v = iastEl.value, s, e, live = (document.activeElement === iastEl);
+  s = live ? iastEl.selectionStart : v.length;
+  e = live ? iastEl.selectionEnd : v.length;
+  if (s == null) { s = e = v.length; }
+  if (e < s) { e = s; }
+  iastEl.value = v.slice(0, s) + ch + v.slice(e);
+  var p = s + ch.length;
+  iastEl.focus();
+  try { iastEl.setSelectionRange(p, p); } catch(err) {}
+  updatePv();
+}
+(function buildAcc(){
+  var host = $("#acc"), upper = false, lastTouch = 0;
+  var LOW = ["ā","ī","ū","ṛ","ṝ","ḷ","ḹ","ṃ","ṁ","ḥ","ṅ","ñ","ś","ṣ","ṭ","ḍ","ṇ","-"];
+  function mk(ch){
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = ch; b.title = "插入 " + ch;
+    b.addEventListener("touchstart", function(e){
+      e.preventDefault(); lastTouch = Date.now(); accInsert(ch);
+    }, { passive: false });
+    b.addEventListener("mousedown", function(e){ e.preventDefault(); });   // 保住输入框焦点
+    b.addEventListener("click", function(){
+      if (Date.now() - lastTouch < 800) return;   // 触屏已处理过，跳过合成 click
+      accInsert(ch);
+    });
+    return b;
+  }
+  function render(){
+    host.innerHTML = "";
+    LOW.forEach(function(c){ host.appendChild(mk(upper ? c.toUpperCase() : c)); });
+    var t = document.createElement("button");
+    t.type = "button"; t.className = "shift" + (upper ? " on" : "");
+    t.textContent = upper ? "A▲" : "Aa"; t.title = "切换大写变音字母";
+    t.addEventListener("click", function(){
+      upper = !upper; render();
+      if (document.activeElement !== iastEl) iastEl.focus();
+    });
+    host.appendChild(t);
+  }
+  render();
+})();
 
 $("#copy").onclick = function(){
   var t = paper.innerText;
@@ -473,6 +559,58 @@ $("#pdf").onclick = function(){
 };
 
 var PAL = [{"label": "元音", "items": [{"c": "𑖀", "n": "A"}, {"c": "𑖁", "n": "AA"}, {"c": "𑖂", "n": "I"}, {"c": "𑖃", "n": "II"}, {"c": "𑖄", "n": "U"}, {"c": "𑖅", "n": "UU"}, {"c": "𑖆", "n": "VOCALIC R"}, {"c": "𑖇", "n": "VOCALIC RR"}, {"c": "𑖈", "n": "VOCALIC L"}, {"c": "𑖉", "n": "VOCALIC LL"}, {"c": "𑖊", "n": "E"}, {"c": "𑖋", "n": "AI"}, {"c": "𑖌", "n": "O"}, {"c": "𑖍", "n": "AU"}]}, {"label": "辅音", "items": [{"c": "𑖎", "n": "KA"}, {"c": "𑖏", "n": "KHA"}, {"c": "𑖐", "n": "GA"}, {"c": "𑖑", "n": "GHA"}, {"c": "𑖒", "n": "NGA"}, {"c": "𑖓", "n": "CA"}, {"c": "𑖔", "n": "CHA"}, {"c": "𑖕", "n": "JA"}, {"c": "𑖖", "n": "JHA"}, {"c": "𑖗", "n": "NYA"}, {"c": "𑖘", "n": "TTA"}, {"c": "𑖙", "n": "TTHA"}, {"c": "𑖚", "n": "DDA"}, {"c": "𑖛", "n": "DDHA"}, {"c": "𑖜", "n": "NNA"}, {"c": "𑖝", "n": "TA"}, {"c": "𑖞", "n": "THA"}, {"c": "𑖟", "n": "DA"}, {"c": "𑖠", "n": "DHA"}, {"c": "𑖡", "n": "NA"}, {"c": "𑖢", "n": "PA"}, {"c": "𑖣", "n": "PHA"}, {"c": "𑖤", "n": "BA"}, {"c": "𑖥", "n": "BHA"}, {"c": "𑖦", "n": "MA"}, {"c": "𑖧", "n": "YA"}, {"c": "𑖨", "n": "RA"}, {"c": "𑖩", "n": "LA"}, {"c": "𑖪", "n": "VA"}, {"c": "𑖫", "n": "SHA"}, {"c": "𑖬", "n": "SSA"}, {"c": "𑖭", "n": "SA"}, {"c": "𑖮", "n": "HA"}]}, {"label": "附标", "items": [{"c": "𑖯", "n": "VOWEL AA"}, {"c": "𑖰", "n": "VOWEL I"}, {"c": "𑖱", "n": "VOWEL II"}, {"c": "𑖲", "n": "VOWEL U"}, {"c": "𑖳", "n": "VOWEL UU"}, {"c": "𑖴", "n": "VOWEL VOCALIC R"}, {"c": "𑖵", "n": "VOWEL VOCALIC RR"}, {"c": "𑖸", "n": "VOWEL E"}, {"c": "𑖹", "n": "VOWEL AI"}, {"c": "𑖺", "n": "VOWEL O"}, {"c": "𑖻", "n": "VOWEL AU"}]}, {"label": "附加", "items": [{"c": "𑖼", "n": "CANDRABINDU"}, {"c": "𑖽", "n": "ANUSVARA"}, {"c": "𑖾", "n": "VISARGA"}, {"c": "𑖿", "n": "VIRAMA"}, {"c": "𑗀", "n": "NUKTA"}]}, {"label": "标点", "items": [{"c": "𑗁", "n": "SIDDHAM"}, {"c": "𑗂", "n": "DANDA"}, {"c": "𑗃", "n": "DOUBLE DANDA"}, {"c": "𑗄", "n": "SEPARATOR DOT"}, {"c": "𑗅", "n": "SEPARATOR BAR"}, {"c": "𑗆", "n": "REPETITION MARK-1"}, {"c": "𑗇", "n": "REPETITION MARK-2"}, {"c": "𑗈", "n": "REPETITION MARK-3"}, {"c": "𑗉", "n": "END OF TEXT MARK"}, {"c": "𑗊", "n": "SECTION MARK WITH TRIDENT AND U-SHAPED ORNAMENTS"}, {"c": "𑗋", "n": "SECTION MARK WITH TRIDENT AND DOTTED CRESCENTS"}, {"c": "𑗌", "n": "SECTION MARK WITH RAYS AND DOTTED CRESCENTS"}, {"c": "𑗍", "n": "SECTION MARK WITH RAYS AND DOTTED DOUBLE CRESCENTS"}, {"c": "𑗎", "n": "SECTION MARK WITH RAYS AND DOTTED TRIPLE CRESCENTS"}, {"c": "𑗏", "n": "SECTION MARK DOUBLE RING"}, {"c": "𑗐", "n": "SECTION MARK DOUBLE RING WITH RAYS"}, {"c": "𑗑", "n": "SECTION MARK WITH DOUBLE CRESCENTS"}, {"c": "𑗒", "n": "SECTION MARK WITH TRIPLE CRESCENTS"}, {"c": "𑗓", "n": "SECTION MARK WITH QUADRUPLE CRESCENTS"}, {"c": "𑗔", "n": "SECTION MARK WITH SEPTUPLE CRESCENTS"}, {"c": "𑗕", "n": "SECTION MARK WITH CIRCLES AND RAYS"}, {"c": "𑗖", "n": "SECTION MARK WITH CIRCLES AND TWO ENCLOSURES"}, {"c": "𑗗", "n": "SECTION MARK WITH CIRCLES AND FOUR ENCLOSURES"}]}, {"label": "变体", "items": [{"c": "𑗘", "n": "THREE-CIRCLE ALTERNATE I"}, {"c": "𑗙", "n": "TWO-CIRCLE ALTERNATE I"}, {"c": "𑗚", "n": "TWO-CIRCLE ALTERNATE II"}, {"c": "𑗛", "n": "ALTERNATE U"}, {"c": "𑗜", "n": "VOWEL ALTERNATE U"}, {"c": "𑗝", "n": "VOWEL ALTERNATE UU"}]}];
+/* 罗马字标签：让字符表按发音找字，而不是靠认字形 */
+var ROMAN = {
+  "A":"a","AA":"ā","I":"i","II":"ī","U":"u","UU":"ū",
+  "VOCALIC R":"ṛ","VOCALIC RR":"ṝ","VOCALIC L":"ḷ","VOCALIC LL":"ḹ",
+  "E":"e","AI":"ai","O":"o","AU":"au",
+  "KA":"ka","KHA":"kha","GA":"ga","GHA":"gha","NGA":"ṅa",
+  "CA":"ca","CHA":"cha","JA":"ja","JHA":"jha","NYA":"ña",
+  "TTA":"ṭa","TTHA":"ṭha","DDA":"ḍa","DDHA":"ḍha","NNA":"ṇa",
+  "TA":"ta","THA":"tha","DA":"da","DHA":"dha","NA":"na",
+  "PA":"pa","PHA":"pha","BA":"ba","BHA":"bha","MA":"ma",
+  "YA":"ya","RA":"ra","LA":"la","VA":"va",
+  "SHA":"śa","SSA":"ṣa","SA":"sa","HA":"ha",
+  "VOWEL AA":"ā","VOWEL I":"i","VOWEL II":"ī","VOWEL U":"u","VOWEL UU":"ū",
+  "VOWEL VOCALIC R":"ṛ","VOWEL VOCALIC RR":"ṝ",
+  "VOWEL E":"e","VOWEL AI":"ai","VOWEL O":"o","VOWEL AU":"au",
+  "CANDRABINDU":"m̐","ANUSVARA":"ṃ","VISARGA":"ḥ","VIRAMA":"连写","NUKTA":"附点"
+};
+
+/* 字符表按输入法规则工作：
+   辅音后面点「独立元音」，自动换成对应的元音附标（ka + ā → kā）；
+   辅音后面点「a」是内禀元音，不用加符号，直接提示。
+   连写（辅音簇）仍然手动点「连写」键，因为自动补会导致 dha+ka 这种音节边界被判错。 */
+function cpBeforeCaret(){
+  var sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return 0;
+  var r = sel.getRangeAt(0);
+  if (!paper.contains(r.startContainer)) return 0;
+  var node = r.startContainer, off = r.startOffset;
+  if (node.nodeType === 1) {                       // 光标停在元素节点之间（每次插入后就是这种）
+    if (!off) return 0;
+    node = node.childNodes[off - 1];
+    if (!node || node.nodeType !== 3) return 0;
+    off = node.data.length;
+  }
+  if (node.nodeType !== 3 || !off) return 0;
+  var arr = Array.from(node.data.slice(0, off));
+  return arr.length ? arr[arr.length - 1].codePointAt(0) : 0;
+}
+function palType(cp){
+  var prev = cpBeforeCaret();
+  var prevCons = (prev >= 0x1158E && prev <= 0x115AE);   // 上一个码位是辅音
+
+  if (prevCons && cp >= 0x11580 && cp <= 0x1158D) {      // 辅音 + 独立元音 → 改插附标
+    if (cp === 0x11580) { toast("a 是默认元音，不用额外加符号"); return; }
+    var sign = cp + 0x2E;                    // 独立元音 → 附标，码位固定差 0x2E
+    if (sign !== 0x115B6 && sign !== 0x115B7 && sign >= 0x115AF && sign <= 0x115BB) {
+      insertText(S(sign)); return;
+    }
+  }
+  insertText(S(cp));
+}
+
 (function buildPal(){
   var host = $("#pal");
   PAL.forEach(function(grp){
@@ -483,9 +621,14 @@ var PAL = [{"label": "元音", "items": [{"c": "𑖀", "n": "A"}, {"c": "𑖁", 
     box.className = "chars";
     grp.items.forEach(function(it){
       var b = document.createElement("button");
-      b.textContent = it.c;
+      var g = document.createElement("span"); g.className = "g"; g.textContent = it.c;
+      b.appendChild(g);
+      var rm = ROMAN[it.n];
+      var l = document.createElement("span"); l.className = "l";
+      l.textContent = rm || "\u00A0";
+      b.appendChild(l);
       b.title = it.n;
-      b.onclick = function(){ insertText(it.c); };
+      b.onclick = function(){ palType(it.c.codePointAt(0)); };
       box.appendChild(b);
     });
     host.appendChild(box);
