@@ -185,7 +185,13 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 .fb-row button{padding:9px 18px;border-radius:9px;background:var(--accent);
   color:#fff;border-color:var(--accent);font-weight:600}
 .fb-row button:disabled{opacity:.5}
-.fb-item{padding:12px 0;border-bottom:1px solid #f1e9dc}
+.fb-note{font-size:11.5px;color:#a2967f;line-height:1.65;margin:9px 2px 0}
+#fbadmin{font-size:12px;padding:6px 12px;border-radius:99px;background:#fdfbf7}
+#fbadmin.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fb-item{padding:12px 0;border-bottom:1px solid #f1e9dc;position:relative}
+.fb-del{position:absolute;right:0;top:12px;font-size:11.5px;padding:4px 10px;
+  border-radius:99px;color:#a94d34;border-color:#e8cdc4;background:#fff}
+.fb-meta{padding-right:60px}
 .fb-item:last-child{border-bottom:0}
 .fb-meta{font-size:11.5px;color:#a2967f;margin-bottom:4px}
 .fb-text{font-size:13.5px;color:#3f3730;line-height:1.68;white-space:pre-wrap;word-break:break-word}
@@ -244,6 +250,7 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
 <div id="fb" class="sheet">
   <div class="sheet-hd">
     <b>留言 / 改进建议</b>
+    <button type="button" id="fbadmin">管理</button>
     <button type="button" id="fbclose">收起</button>
   </div>
   <div class="fb-body">
@@ -253,6 +260,7 @@ footer{max-width:900px;margin:26px auto 0;padding:0 12px;font-size:11.5px;color:
         <input id="fbname" maxlength="20" placeholder="署名（可留空）">
         <button type="button" id="fbsend">提交</button>
       </div>
+      <p class="fb-note">留言是公开的，所有人都能看到。请勿发布广告、联系方式或私人信息，违规内容会被删除。</p>
     </div>
     <div id="fblist"><div class="fb-empty">加载中…</div></div>
   </div>
@@ -845,6 +853,15 @@ function palBack(){
   var btn = $("#fbopen"), sheet = $("#fb"), list = $("#fblist"),
       txt = $("#fbtext"), nameEl = $("#fbname"), send = $("#fbsend");
 
+  var token = "";
+  try { token = localStorage.getItem("siddham-fb-token") || ""; } catch (e) {}
+  function markAdmin(){
+    var a = $("#fbadmin");
+    if (!a) return;
+    a.classList.toggle("on", !!token);
+    a.textContent = token ? "管理中" : "管理";
+  }
+
   function fmt(ts){
     var d = new Date(ts);
     if (isNaN(d.getTime())) return "";
@@ -867,12 +884,31 @@ function palBack(){
       var t = document.createElement("div"); t.className = "fb-text";
       t.textContent = it.text;
       d.appendChild(m); d.appendChild(t);
+      if (token) {
+        var del = document.createElement("button");
+        del.type = "button"; del.className = "fb-del"; del.textContent = "删除";
+        del.addEventListener("click", function(){
+          if (!confirm("删掉这条留言？\n\n" + (it.text || "").slice(0, 60))) return;
+          fetch(API + "/del", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ id: it.id, token: token })
+          }).then(function(r){
+            return r.json().then(function(j){ return { ok: r.ok, j: j }; });
+          }).then(function(res){
+            if (!res.ok) throw new Error(res.j.error || "删除失败");
+            toast("已删除"); load();
+          }).catch(function(e){ toast(e.message || "删除失败"); });
+        });
+        d.appendChild(del);
+      }
       list.appendChild(d);
     });
     if (total > items.length) {
       list.appendChild(empty("只显示最近 " + items.length + " 条（共 " + total + " 条）"));
     }
   }
+
   function load(){
     fetch(API, { cache: "no-store" }).then(function(r){
       if (!r.ok) throw new Error("bad");
@@ -898,6 +934,30 @@ function palBack(){
     load();
   });
   $("#fbclose").addEventListener("click", function(){ sheet.classList.remove("on"); });
+
+  function saveToken(v){
+    try {
+      if (v) localStorage.setItem("siddham-fb-token", v);
+      else localStorage.removeItem("siddham-fb-token");
+    } catch (e) {}
+  }
+  $("#fbadmin").addEventListener("click", function(){
+    var v = window.prompt("输入管理口令（服务器首次启动时会打印，也存在 data/admin-token.txt）\n留空则退出管理模式", token || "");
+    if (v === null) return;
+    v = v.trim();
+    if (!v) { token = ""; saveToken(""); markAdmin(); load(); return; }   // 退出管理
+    fetch(API + "/auth", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ token: v })
+    }).then(function(r){
+      return r.json().then(function(j){ return { ok: r.ok, j: j }; });
+    }).then(function(res){
+      if (!res.ok) { toast(res.j.error || "口令不对"); return; }
+      token = v; saveToken(v); markAdmin(); toast("已进入管理模式"); load();
+    }).catch(function(){ toast("验证失败，稍后再试"); });
+  });
+  markAdmin();
 
   send.addEventListener("click", function(){
     var v = txt.value.trim();
